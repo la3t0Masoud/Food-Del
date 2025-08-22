@@ -4,7 +4,7 @@
     background: url('/header_img.png') no-repeat ;
     background-size: contain;
     position: relative;
-    animation: fadeIn 3s;
+    animation: fadeIn 2s;
 }
 .header-contents{
     position: absolute;
@@ -15,7 +15,7 @@
     bottom: 10%;
     left: 6vw;
     gap: 1.5vw;
-    animation: fadeIn2 3s;
+    animation: fadeIn2 2s;
 }
 .header-contents h2{
     color: white;
