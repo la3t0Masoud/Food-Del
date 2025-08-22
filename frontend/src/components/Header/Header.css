@@ -41,3 +41,20 @@ h2{
 button{
     cursor: pointer;
 }
+@media(max-with:1050px){
+    .header-contents{
+        max-width: 45%;
+    }
+}
+@media(min-with:750px){
+
+    .header-contents{
+        max-width: 65%;
+    }
+    .header-contents{
+        display: none;
+    }
+    .header-contents button{
+        padding: 2vw 4vw;
+    }
+}
