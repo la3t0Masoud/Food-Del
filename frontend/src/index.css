@@ -18,3 +18,22 @@ a{
   width: 80%;
   margin: auto;
 }
+@keyframes fadeIn {
+ 0%{
+  opacity: 0;
+ }
+ 100%{
+  opacity: 1;
+ }
+}
+@keyframes fadeIn2 {
+  0%{
+    opacity: 0;
+  }
+ 50%{
+  opacity: 0;
+ }
+ 100%{
+  opacity: 1;
+ }
+}
