@@ -2,8 +2,7 @@ import React,{useContext,useState,useEffect} from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import FoodItem from '../../components/FoodItem/FoodItem'
 import { StoreContext } from '../../context/StoreContext'
-import { food_list } from "../../assets/assets";
-
+import './SearchBar.css'
 
 const SerachBar = () => {
     
@@ -24,7 +23,7 @@ const SerachBar = () => {
         <form onSubmit={handleSearch} className='search-form'>
             <input 
                 type="text" 
-                placeholder='Search for movies...' 
+                placeholder='Search for Food ...' 
                 className="search-input" 
             />
             <button type='submit' className="search-button">Search</button>

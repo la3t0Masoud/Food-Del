@@ -3,9 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-.navbar{
-    width: 90%;
+    width: 100%;
 }
 .navBar-logo-img{
     width: 62px;
