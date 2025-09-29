@@ -20,7 +20,7 @@ const Navbar = ({setShowLogin}) => {
             <a href='#footer' onClick={()=> setMeu("contact-us")} className={menu === "contact-us"?"active":""} >contact us</a>
         </ul>
         <div className="navbar-right">
-            <img src={assets.search_icon} alt="" />
+            <Link to="/SearchBar"><img src={assets.search_icon} alt="" /></Link>
             <div className="navbar-search-icon">
                 <Link to="/cart" ><img src={assets.basket_icon} alt=""/></Link>
                 <div className={getTotalCartAmount()===0?"":"dot"} ></div>
