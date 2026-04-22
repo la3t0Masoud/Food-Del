@@ -41,6 +41,25 @@
   margin: 10px 10px;
   margin-left: 0;
 }
+.DivButtoms {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: right;
+  margin-top: 15px;
+}
+.Details {
+  width: 30%;
+  max-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  background-color: transparent;
+  border: none;
+  font-size: large;
+  cursor: pointer;
+}
 .food-item-img-container {
   position: relative;
 }
