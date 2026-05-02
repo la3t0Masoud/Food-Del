@@ -28,6 +28,7 @@ const FoodDisplay = ({
                 image={item.image}
                 HaveDetails={item.HaveDetails}
                 Details={item.Details}
+                options={item.options}
                 setSelectedFood={setSelectedFood}
                 setFoodDetails={setFoodDetails}
               />

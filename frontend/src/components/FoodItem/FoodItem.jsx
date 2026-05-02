@@ -12,13 +12,14 @@ const FoodItem = ({
   image,
   HaveDetails,
   Details,
+  options,
   setShowDetails,
   setSelectedFood,
   setFoodDetails,
 }) => {
   const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
   const handleFoodSelect = () => {
-    setFoodDetails({ id, name, price, description, image });
+    setFoodDetails({ id, name, price, description, image, Details, options });
     setShowDetails(true);
   };
   return (
@@ -58,9 +59,11 @@ const FoodItem = ({
           <p className="food-item-des">{description}</p>
           <div className="DivButtoms">
             <p className="food-item-price">${price}</p>
-            <button onClick={handleFoodSelect} className="Details">
-              {Details}
-            </button>
+            {HaveDetails && (
+              <button onClick={handleFoodSelect} className="Details">
+                Details
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -6,15 +6,8 @@ import FoodDisplay from "../../components/FoodDisplay/FoodDisplay";
 import AppDownload from "../../components/AppDownload/AppDownload";
 import DetailsPopup from "../../components/DetailsPopup/DetailsPopup";
 
-const Home = ({ setShowDetails }) => {
+const Home = ({ setShowDetails, setFoodDetails }) => {
   const [category, setCategory] = useState("All");
-  const [foodDetails, setFoodDetails] = useState({}); // نگهداری مشخصات غذا انتخاب شده
-
-  const handleFoodDetails = (food) => {
-    console.log(food); // بررسی مقدار مشخصات غذا
-    setFoodDetails(food);
-    setShowDetails(true);
-  };
 
   return (
     <div>
@@ -28,15 +21,9 @@ const Home = ({ setShowDetails }) => {
       <FoodDisplay
         setShowDetails={setShowDetails}
         category={category}
-        setFoodDetails={handleFoodDetails} // ارسال تابع برای دریافت مشخصات غذا
+        setFoodDetails={setFoodDetails}
       />
       <AppDownload />
-
-      {/* فقط وقتی foodDetails مقداردهی شده است، پاپ‌آپ نمایش داده شود */}
-
-      {foodDetails && Object.keys(foodDetails).length > 0 && (
-        <DetailsPopup PDetails={foodDetails} setShowDetails={setShowDetails} />
-      )}
     </div>
   );
 };
