@@ -13,6 +13,7 @@ const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [foodDetails, setFoodDetails] = useState({});
+  const [savedOptions, setSavedOptions] = useState({});
 
   return (
     <>
@@ -20,7 +21,12 @@ const App = () => {
         <LoginPopup setShowLogin={setShowLogin} />
       : <></>}
       {showDetails ?
-        <DetailsPopup PDetails={foodDetails} setShowDetails={setShowDetails} />
+        <DetailsPopup
+          PDetails={foodDetails}
+          setShowDetails={setShowDetails}
+          savedOptions={savedOptions}
+          setSavedOptions={setSavedOptions}
+        />
       : null}
       <div className="app">
         <Navbar setShowLogin={setShowLogin} />

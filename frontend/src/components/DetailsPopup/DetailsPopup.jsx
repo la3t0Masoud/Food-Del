@@ -2,13 +2,24 @@ import React, { useState, useEffect } from "react";
 import "./DetailsPopup.css";
 import { assets } from "../../assets/assets";
 
-const DetailsPopup = ({ PDetails, setShowDetails }) => {
-  const [selectedOptions, setSelectedOptions] = useState({});
+const DetailsPopup = ({
+  PDetails,
+  setShowDetails,
+  savedOptions,
+  setSavedOptions,
+}) => {
+  // const [selectedOptions, setSelectedOptions] = useState({});
+  const [selectedOptions, setSelectedOptions] = useState(
+    savedOptions[PDetails.id] || {},
+  );
 
   const handleChange = (key, value) => {
-    setSelectedOptions((prev) => ({
+    const updated = { ...selectedOptions, [key]: value };
+    setSelectedOptions(updated);
+
+    setSavedOptions((prev) => ({
       ...prev,
-      [key]: value,
+      [PDetails.id]: updated,
     }));
   };
   return (
@@ -31,8 +42,9 @@ const DetailsPopup = ({ PDetails, setShowDetails }) => {
               Object.entries(PDetails.options).map(([key, values]) => (
                 <div key={key} className="dropdown-group">
                   <label>{key}</label>
-                  <select onChange={(e) => handleChange(key, e.target.value)}>
-                    <option value="">Select {key}</option>
+                  <select
+                    value={selectedOptions[key] || ""}
+                    onChange={(e) => handleChange(key, e.target.value)}>
                     {values.map((item, index) => (
                       <option key={index} value={item}>
                         {item}
