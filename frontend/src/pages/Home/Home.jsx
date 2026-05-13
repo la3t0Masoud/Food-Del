@@ -6,7 +6,7 @@ import FoodDisplay from "../../components/FoodDisplay/FoodDisplay";
 import AppDownload from "../../components/AppDownload/AppDownload";
 import DetailsPopup from "../../components/DetailsPopup/DetailsPopup";
 
-const Home = ({ setShowDetails, setFoodDetails }) => {
+const Home = ({ setShowDetails, setFoodDetails, savedPrices }) => {
   const [category, setCategory] = useState("All");
 
   return (
@@ -22,6 +22,7 @@ const Home = ({ setShowDetails, setFoodDetails }) => {
         setShowDetails={setShowDetails}
         category={category}
         setFoodDetails={setFoodDetails}
+        savedPrices={savedPrices}
       />
       <AppDownload />
     </div>

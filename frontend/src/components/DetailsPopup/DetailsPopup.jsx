@@ -7,11 +7,24 @@ const DetailsPopup = ({
   setShowDetails,
   savedOptions,
   setSavedOptions,
+  savedPrices,
+  setSavedPrices,
 }) => {
   // const [selectedOptions, setSelectedOptions] = useState({});
   const [selectedOptions, setSelectedOptions] = useState(
     savedOptions[PDetails.id] || {},
   );
+
+  // const calculatePrice = (opts = selectedOptions) => {
+  //   let total = PDetails.price || 0;
+  //   if (PDetails.options) {
+  //     Object.entries(PDetails.options).forEach(([key, values]) => {
+  //       const found = values.find((v) => v.name === opts[key]);
+  //       if (found) total += found.price;
+  //     });
+  //   }
+  //   return total;
+  // };
 
   const handleChange = (key, value) => {
     const updated = { ...selectedOptions, [key]: value };
@@ -21,7 +34,26 @@ const DetailsPopup = ({
       ...prev,
       [PDetails.id]: updated,
     }));
+    setSavedPrices((prev) => ({
+      ...prev,
+      [PDetails.id]: calculatePrice(updated),
+    }));
   };
+
+  const calculatePrice = (opts = selectedOptions) => {
+    let total = PDetails.price || 0;
+
+    if (PDetails.options) {
+      Object.entries(PDetails.options).forEach(([key, values]) => {
+        const selectedName = selectedOptions[key];
+        const found = values.find((v) => v.name === opts[key]);
+        if (found) total += found.price;
+      });
+    }
+
+    return total;
+  };
+
   return (
     <>
       <div className="login-popup">
@@ -46,14 +78,16 @@ const DetailsPopup = ({
                     value={selectedOptions[key] || ""}
                     onChange={(e) => handleChange(key, e.target.value)}>
                     {values.map((item, index) => (
-                      <option key={index} value={item}>
-                        {item}
+                      <option key={index} value={item.name}>
+                        {item.name} (+${item.price})
                       </option>
                     ))}
                   </select>
                 </div>
               ))}
-            <p>Price: ${PDetails.price}</p>
+            <p>
+              Price: <strong>${calculatePrice()}</strong>
+            </p>
           </div>
         </form>
       </div>

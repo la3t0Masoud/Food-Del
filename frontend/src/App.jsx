@@ -14,6 +14,8 @@ const App = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [foodDetails, setFoodDetails] = useState({});
   const [savedOptions, setSavedOptions] = useState({});
+  const [savedPrices, setSavedPrices] = useState({});
+  // const [savedPrices, setSavedPrices] = useState({});
 
   return (
     <>
@@ -26,6 +28,8 @@ const App = () => {
           setShowDetails={setShowDetails}
           savedOptions={savedOptions}
           setSavedOptions={setSavedOptions}
+          savedPrices={savedPrices}
+          setSavedPrices={setSavedPrices}
         />
       : null}
       <div className="app">
@@ -37,10 +41,11 @@ const App = () => {
               <Home
                 setShowDetails={setShowDetails}
                 setFoodDetails={setFoodDetails}
+                savedPrices={savedPrices}
               />
             }
           />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<Cart savedPrices={savedPrices} />} />
           <Route path="/order" element={<PlaceOrder />} />
           <Route path="/SearchBar" element={<SerachBar />} />
         </Routes>

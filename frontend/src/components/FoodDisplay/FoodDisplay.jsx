@@ -8,6 +8,7 @@ const FoodDisplay = ({
   setShowDetails,
   setSelectedFood,
   setFoodDetails,
+  savedPrices,
 }) => {
   const { food_list } = useContext(StoreContext);
 
@@ -24,7 +25,7 @@ const FoodDisplay = ({
                 id={item._id}
                 name={item.name}
                 description={item.description}
-                price={item.price}
+                price={savedPrices?.[item._id] ?? item.price}
                 image={item.image}
                 HaveDetails={item.HaveDetails}
                 Details={item.Details}
