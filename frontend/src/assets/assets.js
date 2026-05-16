@@ -473,7 +473,7 @@ export const food_list = [
     HaveDetails: true,
     options: {
       dough: [
-        { name: "Italian", price: 5 },
+        { name: "Italian", price: 0 },
         { name: "American", price: 4 },
         { name: "Thin crust", price: 6 },
 
@@ -481,7 +481,7 @@ export const food_list = [
         { name: "Stuffed crust ", price: 8 },
       ],
       cheese: [
-        { name: "Mozzarella", price: 3 },
+        { name: "Mozzarella", price: 0 },
         { name: "Cheddar", price: 4 },
         { name: "Vegan", price: 2 },
         { name: "Parmesan", price: 5 },
@@ -489,14 +489,14 @@ export const food_list = [
         { name: "Gorgonzola ", price: 6 },
       ],
       sauce: [
-        { name: "Tomato", price: 2 },
+        { name: "Tomato", price: 0 },
         { name: "BBQ", price: 3 },
         { name: "Alfredo  Sauce", price: 4 },
         { name: "garlic sauce", price: 2 },
         { name: "Pesto", price: 3 },
       ],
       Toppings: [
-        { name: "pepperoni", price: 2 },
+        { name: "pepperoni", price: 0 },
         { name: "chicken", price: 3 },
         { name: "sausage", price: 2 },
         { name: "ham", price: 3 },
@@ -505,7 +505,7 @@ export const food_list = [
         { name: "olives", price: 1 },
       ],
       Seasonings: [
-        { name: "oregano", price: 2 },
+        { name: "oregano", price: 0 },
         { name: "basil", price: 2 },
         { name: "garlic", price: 2 },
         { name: "thyme", price: 2 },
@@ -513,7 +513,7 @@ export const food_list = [
         { name: "black pepper", price: 2 },
       ],
       Cooking_Method: [
-        { name: "wood‑fired oven", price: 5 },
+        { name: "wood‑fired oven", price: 0 },
         { name: "regular oven", price: 0 },
         { name: "pan pizza", price: 0 },
         { name: "grilled pizza", price: 0 },
@@ -532,23 +532,23 @@ export const food_list = [
     HaveDetails: true,
     options: {
       Filling: [
-        { name: "Chicken", price: 3 },
+        { name: "Chicken", price: 0 },
         { name: "bacon", price: 2 },
         { name: "sausage", price: 2 },
         { name: "shredded lamb", price: 4 },
       ],
       Bread: [
-        { name: "Tortilla wraps", price: 1 },
+        { name: "Tortilla wraps", price: 0 },
         { name: "Rice paper", price: 1 },
         { name: "Puff pastry", price: 2 },
       ],
       sauce: [
-        { name: "Chili sauce", price: 2 },
+        { name: "Chili sauce", price: 0 },
         { name: "Mustard", price: 1 },
         { name: "Pesto", price: 3 },
       ],
       Seasonings: [
-        { name: "Black pepper", price: 1 },
+        { name: "Black pepper", price: 0 },
         { name: "paprika", price: 2 },
         { name: "cumin", price: 2 },
         { name: "curry", price: 3 },
@@ -567,7 +567,7 @@ export const food_list = [
     HaveDetails: true,
     options: {
       Base: [
-        { name: "lettuce", price: 1 },
+        { name: "lettuce", price: 0 },
         { name: "spinach", price: 1 },
         { name: "cabbage", price: 1 },
         { name: "arugula", price: 1 },
@@ -576,12 +576,12 @@ export const food_list = [
         { name: "basil", price: 1 },
       ],
       Protein: [
-        { name: "Grilled chicken", price: 3 },
+        { name: "Grilled chicken", price: 0 },
         { name: "tuna", price: 2 },
         { name: "boiled eggs", price: 1 },
       ],
       Toppings: [
-        { name: "Olives", price: 1 },
+        { name: "Olives", price: 0 },
         { name: "caramelized onions", price: 1 },
         { name: "sun-dried tomatoes", price: 1 },
         { name: "Toasted bread croutons", price: 1 },
@@ -599,21 +599,21 @@ export const food_list = [
     HaveDetails: true,
     options: {
       Bread: [
-        { name: "Baguette", price: 1 },
+        { name: "Baguette", price: 0 },
         { name: "Sourdough", price: 1 },
         { name: "Brioche", price: 2 },
         { name: "Ciabatta", price: 1 },
         { name: "Bagel", price: 1 },
       ],
       Main_Filling: [
-        { name: "Grilled chicken", price: 3 },
+        { name: "Grilled chicken", price: 0 },
         { name: "Beef", price: 4 },
         { name: "roast beef", price: 4 },
         { name: "steak", price: 5 },
         { name: "veggie patties", price: 2 },
       ],
       Vegetables: [
-        { name: "Lettuce", price: 1 },
+        { name: "Lettuce", price: 0 },
         { name: "Tomato", price: 1 },
         { name: "Cucumber", price: 1 },
         { name: "Onion", price: 1 },
@@ -622,13 +622,13 @@ export const food_list = [
         { name: "Coleslaw", price: 1 },
       ],
       Cheese: [
-        { name: "Cheddar", price: 1 },
+        { name: "Cheddar", price: 0 },
         { name: "Mozzarella", price: 1 },
         { name: "Swiss", price: 1 },
         { name: "Feta", price: 1 },
       ],
       Extra_Toppings: [
-        { name: "Bacon", price: 2 },
+        { name: "Bacon", price: 0 },
         { name: "Fried egg", price: 2 },
         { name: "Olives", price: 1 },
         { name: "Crispy onions", price: 1 },

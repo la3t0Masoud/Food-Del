@@ -10,21 +10,9 @@ const DetailsPopup = ({
   savedPrices,
   setSavedPrices,
 }) => {
-  // const [selectedOptions, setSelectedOptions] = useState({});
   const [selectedOptions, setSelectedOptions] = useState(
     savedOptions[PDetails.id] || {},
   );
-
-  // const calculatePrice = (opts = selectedOptions) => {
-  //   let total = PDetails.price || 0;
-  //   if (PDetails.options) {
-  //     Object.entries(PDetails.options).forEach(([key, values]) => {
-  //       const found = values.find((v) => v.name === opts[key]);
-  //       if (found) total += found.price;
-  //     });
-  //   }
-  //   return total;
-  // };
 
   const handleChange = (key, value) => {
     const updated = { ...selectedOptions, [key]: value };
@@ -45,7 +33,6 @@ const DetailsPopup = ({
 
     if (PDetails.options) {
       Object.entries(PDetails.options).forEach(([key, values]) => {
-        const selectedName = selectedOptions[key];
         const found = values.find((v) => v.name === opts[key]);
         if (found) total += found.price;
       });
@@ -55,43 +42,96 @@ const DetailsPopup = ({
   };
 
   return (
-    <>
-      <div className="login-popup">
-        <form className="login-popup-container">
-          <div className="login-popup-title">
-            <h4>Details</h4>
-            <img
-              onClick={() => setShowDetails(false)}
-              src={assets.cross_icon}
-              alt="close"
-            />
+    <div
+      className="details-popup-overlay"
+      onClick={() => setShowDetails(false)}>
+      <div
+        className="details-popup-container"
+        onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
+        <div className="details-popup-header">
+          <h2 className="details-popup-title">Product Details</h2>
+          {/* <button
+            className="details-popup-close"
+            onClick={() => setShowDetails(false)}
+            aria-label="Close">
+            <img src={assets.cross_icon} alt="" />
+          </button> */}
+        </div>
+
+        {/* Content */}
+        <div className="details-popup-content">
+          {/* Product Image & Name */}
+          <div className="details-product-hero">
+            <div className="details-product-image">
+              <img src={PDetails.image} alt={PDetails.name} />
+            </div>
+            <div className="details-product-info">
+              <h3 className="details-product-name">{PDetails.name}</h3>
+              <p className="details-product-description">
+                {PDetails.description}
+              </p>
+            </div>
           </div>
-          <div className="login-popup-inputs">
-            <img src={PDetails.image} alt={PDetails.name} />
-            <h4>{PDetails.name}</h4>
-            <p>{PDetails.description}</p>
-            {PDetails.options &&
-              Object.entries(PDetails.options).map(([key, values]) => (
-                <div key={key} className="dropdown-group">
-                  <label>{key}</label>
-                  <select
-                    value={selectedOptions[key] || ""}
-                    onChange={(e) => handleChange(key, e.target.value)}>
-                    {values.map((item, index) => (
-                      <option key={index} value={item.name}>
-                        {item.name} (+${item.price})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ))}
-            <p>
-              Price: <strong>${calculatePrice()}</strong>
-            </p>
+
+          {/* Options */}
+          {PDetails.options && Object.keys(PDetails.options).length > 0 && (
+            <div className="details-options-section">
+              <h4 className="details-section-title">Customize Your Order</h4>
+              <div className="details-options-grid">
+                {Object.entries(PDetails.options).map(([key, values]) => (
+                  <div key={key} className="details-option-group">
+                    <label className="details-option-label">{key}</label>
+                    <div className="details-select-wrapper">
+                      <select
+                        className="details-select"
+                        value={selectedOptions[key] || ""}
+                        onChange={(e) => handleChange(key, e.target.value)}>
+                        {values.map((item, index) => (
+                          <option key={index} value={item.name}>
+                            {item.name}
+                            {item.price > 0 ? ` (+$${item.price})` : ""}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="details-select-arrow">
+                        <svg
+                          width="12"
+                          height="8"
+                          viewBox="0 0 12 8"
+                          fill="none">
+                          <path
+                            d="M1 1L6 6L11 1"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="details-popup-footer">
+          <div className="details-price-section">
+            <span className="details-price-label">Total Price</span>
+            <span className="details-price-value">
+              ${calculatePrice().toFixed(2)}
+            </span>
           </div>
-        </form>
+          <button
+            className="details-confirm-button"
+            onClick={() => setShowDetails(false)}>
+            Confirm Selection
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
