@@ -5,6 +5,7 @@ import ExploreMenu from "../../components/ExploreMenu/ExploreMenu";
 import FoodDisplay from "../../components/FoodDisplay/FoodDisplay";
 import AppDownload from "../../components/AppDownload/AppDownload";
 import DetailsPopup from "../../components/DetailsPopup/DetailsPopup";
+import { motion } from "framer-motion";
 
 const Home = ({ setShowDetails, setFoodDetails, savedPrices }) => {
   const [category, setCategory] = useState("All");
@@ -12,7 +13,13 @@ const Home = ({ setShowDetails, setFoodDetails, savedPrices }) => {
   return (
     <div>
       <Header />
-      <hr />
+      <motion.div
+        initial={{ opacity: 0, y: 200 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}>
+        <hr />
+      </motion.div>
       <ExploreMenu
         category={category}
         setShowDetails={setShowDetails}

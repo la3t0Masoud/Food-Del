@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import "./FoodDisplay.css";
 import { StoreContext } from "../../context/StoreContext";
 import FoodItem from "../FoodItem/FoodItem";
+import { motion } from "framer-motion";
 
 const FoodDisplay = ({
   category,
@@ -14,25 +15,37 @@ const FoodDisplay = ({
 
   return (
     <div className="food-display" id="food-display">
-      <h3>Top dishes near you</h3>
+      <motion.div
+        initial={{ opacity: 0, y: 200 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}>
+        <h3>Top dishes near you</h3>
+      </motion.div>
       <div className="food-display-list">
         {food_list.map((item, index) => {
           if (category === "All" || category === item.category) {
             return (
-              <FoodItem
-                setShowDetails={setShowDetails}
-                key={index}
-                id={item._id}
-                name={item.name}
-                description={item.description}
-                price={savedPrices?.[item._id] ?? item.price}
-                image={item.image}
-                HaveDetails={item.HaveDetails}
-                Details={item.Details}
-                options={item.options}
-                setSelectedFood={setSelectedFood}
-                setFoodDetails={setFoodDetails}
-              />
+              <motion.div
+                initial={{ opacity: 0, y: 200 }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}>
+                <FoodItem
+                  setShowDetails={setShowDetails}
+                  key={index}
+                  id={item._id}
+                  name={item.name}
+                  description={item.description}
+                  price={savedPrices?.[item._id] ?? item.price}
+                  image={item.image}
+                  HaveDetails={item.HaveDetails}
+                  Details={item.Details}
+                  options={item.options}
+                  setSelectedFood={setSelectedFood}
+                  setFoodDetails={setFoodDetails}
+                />
+              </motion.div>
             );
           }
         })}
