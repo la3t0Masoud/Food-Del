@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Cart = ({ savedPrices = {} }) => {
   let QuantityOfCart = 0;
@@ -12,7 +13,6 @@ const Cart = ({ savedPrices = {} }) => {
   const navigate = useNavigate();
   const getItemPrice = (item) => savedPrices?.[item._id] ?? item.price; // ✅
 
-  // جمع کل با قیمت‌های آپدیت‌شده
   const getUpdatedTotal = () => {
     return food_list.reduce((total, item) => {
       if (cartItems[item._id] > 0) {
@@ -60,38 +60,53 @@ const Cart = ({ savedPrices = {} }) => {
           }
         })}
       </div>
+
       <div className="cart-bottom">
-        <div className="cart-total">
-          <h4>Cart Totals</h4>
-          <div>
-            <div className="cart-total-details">
-              <p>Subtotal</p>
-              <p>${updatedTotal}</p> {/* ← آپدیت */}
+        <motion.div
+          initial={{ opacity: 0, y: 200 }}
+          transition={{ duration: 1.5, ease: "easeOut", delay: 1 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}>
+          <div className="cart-total">
+            <h4>Cart Totals</h4>
+            <div>
+              <div className="cart-total-details">
+                <p>Subtotal</p>
+                <p>${updatedTotal}</p>
+              </div>
+              <hr />
+              <div className="cart-total-details">
+                <p>Delivery Fee (10%)</p>
+                <p>${updatedTotal === 0 ? 0 : updatedTotal / 10}</p>{" "}
+              </div>
+              <hr />
+              <div className="cart-total-details">
+                <b>Total</b>
+                <b>
+                  ${updatedTotal === 0 ? 0 : updatedTotal + updatedTotal / 10}
+                </b>
+              </div>
             </div>
-            <hr />
-            <div className="cart-total-details">
-              <p>Delivery Fee (10%)</p>
-              <p>${updatedTotal === 0 ? 0 : updatedTotal / 10}</p>{" "}
-            </div>
-            <hr />
-            <div className="cart-total-details">
-              <b>Total</b>
-              <b>
-                ${updatedTotal === 0 ? 0 : updatedTotal + updatedTotal / 10}
-              </b>
+            <button onClick={() => navigate("/order")}>
+              PROCED TO CHECKOUT
+            </button>
+          </div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 200 }}
+          transition={{ duration: 1.5, ease: "easeOut", delay: 0.8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}>
+          <div className="cart-promocode">
+            <div>
+              <p>If you have a promo code, Enter it here</p>
+              <div className="cart-promocode-input">
+                <input type="text" placeholder="Promo code" />
+                <button>Submit</button>
+              </div>
             </div>
           </div>
-          <button onClick={() => navigate("/order")}>PROCED TO CHECKOUT</button>
-        </div>
-        <div className="cart-promocode">
-          <div>
-            <p>If you have a promo code, Enter it here</p>
-            <div className="cart-promocode-input">
-              <input type="text" placeholder="Promo code" />
-              <button>Submit</button>
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
