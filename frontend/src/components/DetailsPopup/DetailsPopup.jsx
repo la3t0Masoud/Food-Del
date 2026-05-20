@@ -29,7 +29,18 @@ const DetailsPopup = ({
   };
 
   const calculatePrice = (opts = selectedOptions) => {
-    let total = PDetails.price || 0;
+    let total =
+      savedPrices[PDetails.id] !== undefined ?
+        savedPrices[PDetails.id]
+      : PDetails.price || 0;
+
+    if (savedOptions[PDetails.id]) {
+      Object.entries(PDetails.options || {}).forEach(([key, values]) => {
+        const previousOption = savedOptions[PDetails.id][key];
+        const found = values.find((v) => v.name === previousOption);
+        if (found) total -= found.price;
+      });
+    }
 
     if (PDetails.options) {
       Object.entries(PDetails.options).forEach(([key, values]) => {
