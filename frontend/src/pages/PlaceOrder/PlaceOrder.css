@@ -1,35 +1,445 @@
-.place-order{
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    gap: 50px;
-    margin-top: 100px;
+/* ========================================
+   Place Order Wrapper & Layout
+   ======================================== */
+.place-order-wrapper {
+  min-height: 70vh;
+  padding: 80px 0 100px;
+  background: linear-gradient(to bottom, #fafafa 0%, #ffffff 100%);
 }
-.place-order-left{
-    width: 100%;
-    max-width: max(30%,500px);
+
+.place-order {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
-.place-order-left .title{
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 50px;
+
+/* ========================================
+   Left Section - Delivery Form
+   ======================================== */
+.place-order-left {
+  flex: 1;
+  max-width: 600px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e9ecef;
 }
-.place-order-left input{
-    margin-bottom: 15px;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #c5c5c5;
-    border-radius: 4px;
-    outline-color: tomato;
+
+.place-order-header {
+  margin-bottom: 40px;
+  text-align: center;
 }
-.place-order-left .multi-fields{
-    display: flex;
-    gap: 10px;
+
+.place-order-icon {
+  width: 48px;
+  height: 48px;
+  color: #ff6b6b;
+  margin: 0 auto 16px;
+  stroke-width: 1.5;
 }
-.place-order-right{
-    width: 100%;
-    max-width: max(40%,500px);
+
+.place-order-left .title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #212529;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
 }
-.place-order .cart-total button{
-    margin-top: 30px;
+
+.place-order-left .subtitle {
+  font-size: 15px;
+  color: #6c757d;
+  margin: 0;
+}
+
+/* ========================================
+   Form Section
+   ======================================== */
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+  margin-left: 4px;
+}
+
+.place-order-left input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #212529;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.place-order-left input::placeholder {
+  color: #adb5bd;
+}
+
+.place-order-left input:hover {
+  border-color: #dee2e6;
+}
+
+.place-order-left input:focus {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+  background: #ffffff;
+}
+
+.place-order-left input:invalid:not(:placeholder-shown) {
+  border-color: #fa5252;
+}
+
+.place-order-left input:valid:not(:placeholder-shown) {
+  border-color: #51cf66;
+}
+
+.multi-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ========================================
+   Phone Input with Prefix
+   ======================================== */
+.phone-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.phone-input-wrapper:hover {
+  border-color: #dee2e6;
+}
+
+.phone-input-wrapper:focus-within {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+}
+
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  padding: 14px 12px 14px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #495057;
+  background: #f8f9fa;
+  border-right: 2px solid #e9ecef;
+  user-select: none;
+  pointer-events: none;
+}
+
+.phone-input {
+  flex: 1;
+  padding: 14px 16px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-family: "Courier New", monospace;
+  letter-spacing: 1px;
+}
+
+.phone-input:focus {
+  outline: none;
+  box-shadow: none !important;
+}
+
+.phone-error {
+  font-size: 13px;
+  color: #fa5252;
+  margin-left: 4px;
+  margin-top: -4px;
+  font-weight: 500;
+}
+
+/* ========================================
+   Right Section - Order Summary
+   ======================================== */
+.place-order-right {
+  flex: 0 0 420px;
+  position: sticky;
+  top: 100px;
+}
+
+.order-summary {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+}
+
+.order-summary-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.order-summary-icon {
+  width: 28px;
+  height: 28px;
+  color: #ff6b6b;
+  stroke-width: 2;
+}
+
+.order-summary-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+.order-summary-content {
+  margin-bottom: 28px;
+}
+
+.order-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  font-size: 15px;
+  color: #495057;
+}
+
+.order-summary-row span:first-child {
+  font-weight: 500;
+}
+
+.order-summary-row span:last-child {
+  font-weight: 600;
+  color: #212529;
+}
+
+.order-summary-divider {
+  height: 1px;
+  background: #e9ecef;
+  margin: 16px 0;
+}
+
+.order-summary-total {
+  padding: 20px 0 0 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #212529;
+}
+
+.order-summary-total span:last-child {
+  color: #ff6b6b;
+  font-size: 24px;
+}
+
+/* ========================================
+   Payment Button
+   ======================================== */
+.payment-button {
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.payment-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.payment-button:active {
+  transform: translateY(0);
+}
+
+.payment-button svg {
+  stroke-width: 2;
+}
+
+/* ========================================
+   Payment Security Badge
+   ======================================== */
+.payment-security {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #495057;
+  font-weight: 500;
+}
+
+.payment-security svg {
+  color: #51cf66;
+  stroke-width: 2;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 1024px) {
+  .place-order {
+    gap: 32px;
+  }
+
+  .place-order-right {
+    flex: 0 0 380px;
+  }
+}
+
+@media (max-width: 768px) {
+  .place-order-wrapper {
+    padding: 60px 0 80px;
+  }
+
+  .place-order {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .place-order-left,
+  .place-order-right {
+    max-width: 100%;
+    flex: 1;
+  }
+
+  .place-order-right {
+    position: static;
+  }
+
+  .place-order-left {
+    padding: 32px 24px;
+  }
+
+  .order-summary {
+    padding: 28px 24px;
+  }
+
+  .place-order-left .title {
+    font-size: 24px;
+  }
+
+  .multi-fields {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .place-order {
+    padding: 0 12px;
+  }
+
+  .place-order-left {
+    padding: 24px 20px;
+  }
+
+  .order-summary {
+    padding: 24px 20px;
+  }
+
+  .place-order-left .title {
+    font-size: 22px;
+  }
+
+  .place-order-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .order-summary-header h3 {
+    font-size: 18px;
+  }
+
+  .payment-button {
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+
+  .phone-prefix {
+    padding: 14px 10px 14px 12px;
+    font-size: 14px;
+  }
+
+  .phone-input {
+    font-size: 14px;
+  }
+}
+
+/* ========================================
+   Accessibility & Print Styles
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .payment-button {
+    display: none;
+  }
+
+  .place-order-wrapper {
+    background: white;
+  }
+
+  .place-order-left,
+  .order-summary {
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+  }
+}
+
+/* ========================================
+   Focus Visible for Keyboard Navigation
+   ======================================== */
+.place-order-left input:focus-visible,
+.payment-button:focus-visible {
+  outline: 3px solid #ff6b6b;
+  outline-offset: 2px;
 }
