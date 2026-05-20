@@ -32,7 +32,7 @@ const SerachBar = () => {
         <div className="food-display-list">
           {food_list
             .filter((item) =>
-              item.name.toLowerCase().startsWith(SearchingFood.toLowerCase()),
+              item.name.toLowerCase().includes(SearchingFood.toLowerCase()),
             )
             .map((item, index) => (
               <FoodItem
