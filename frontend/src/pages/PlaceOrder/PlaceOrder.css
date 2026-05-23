@@ -4,7 +4,14 @@
 .place-order-wrapper {
   min-height: 70vh;
   padding: 80px 0 100px;
-  background: linear-gradient(to bottom, #fafafa 0%, #ffffff 100%);
+  /* استفاده از متغیر پس‌زمینه اصلی یا گرادیان ملایم بر اساس تم */
+  background: var(--bg-secondary);
+  /* اگر می‌خواهید گرادیان ثابت باشد، خط زیر را حذف کنید، اما بهتر است داینامیک باشد */
+  background: linear-gradient(
+    to bottom,
+    var(--bg-secondary) 0%,
+    var(--bg) 100%
+  );
 }
 
 .place-order {
@@ -23,11 +30,14 @@
 .place-order-left {
   flex: 1;
   max-width: 600px;
-  background: #ffffff;
+  /* پس‌زمینه کارت فرم */
+  background: var(--bg);
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  border: 1px solid #e9ecef;
+  /* استفاده از سایه داینامیک */
+  box-shadow: 0 2px 12px var(--shadow-sm);
+  /* استفاده از رنگ حاشیه داینامیک */
+  border: 1px solid var(--border);
 }
 
 .place-order-header {
@@ -38,7 +48,7 @@
 .place-order-icon {
   width: 48px;
   height: 48px;
-  color: #ff6b6b;
+  color: var(--primary);
   margin: 0 auto 16px;
   stroke-width: 1.5;
 }
@@ -46,14 +56,16 @@
 .place-order-left .title {
   font-size: 28px;
   font-weight: 700;
-  color: #212529;
+  /* استفاده از رنگ متن اصلی */
+  color: var(--text);
   margin: 0 0 8px 0;
   line-height: 1.3;
 }
 
 .place-order-left .subtitle {
   font-size: 15px;
-  color: #6c757d;
+  /* استفاده از رنگ متن ثانویه */
+  color: var(--text-tertiary);
   margin: 0;
 }
 
@@ -75,42 +87,49 @@
 .input-group label {
   font-size: 14px;
   font-weight: 600;
-  color: #495057;
+  /* استفاده از رنگ متن ثانویه برای لیبل‌ها */
+  color: var(--text-secondary);
   margin-left: 4px;
 }
 
+/* استایل کلی اینپوت‌ها */
 .place-order-left input {
   width: 100%;
   padding: 14px 16px;
-  border: 2px solid #e9ecef;
+  /* حاشیه داینامیک */
+  border: 2px solid var(--border);
   border-radius: 8px;
   font-size: 15px;
-  color: #212529;
-  background: #ffffff;
+  /* رنگ متن داخل اینپوت */
+  color: var(--text);
+  /* پس‌زمینه اینپوت */
+  background: var(--bg);
   transition: all 0.3s ease;
   outline: none;
 }
 
 .place-order-left input::placeholder {
-  color: #adb5bd;
+  color: var(--text-tertiary);
 }
 
 .place-order-left input:hover {
-  border-color: #dee2e6;
+  border-color: var(--border-secondary);
 }
 
 .place-order-left input:focus {
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
-  background: #ffffff;
+  border-color: var(--primary);
+  /* سایه فوکوس با شفافیت متغیر */
+  box-shadow: 0 0 0 4px var(--primary-light);
+  background: var(--bg);
 }
 
+/* استایل‌های اعتبارسنجی */
 .place-order-left input:invalid:not(:placeholder-shown) {
-  border-color: #fa5252;
+  border-color: var(--primary-hover);
 }
 
 .place-order-left input:valid:not(:placeholder-shown) {
-  border-color: #51cf66;
+  border-color: #51cf66; /* سبز برای اعتبارسنجی می‌تواند ثابت بماند یا متغیر شود */
 }
 
 .multi-fields {
@@ -126,20 +145,20 @@
   position: relative;
   display: flex;
   align-items: center;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--border);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--bg);
   transition: all 0.3s ease;
   overflow: hidden;
 }
 
 .phone-input-wrapper:hover {
-  border-color: #dee2e6;
+  border-color: var(--border-secondary);
 }
 
 .phone-input-wrapper:focus-within {
-  border-color: #ff6b6b;
-  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-light);
 }
 
 .phone-prefix {
@@ -148,9 +167,10 @@
   padding: 14px 12px 14px 16px;
   font-size: 15px;
   font-weight: 600;
-  color: #495057;
-  background: #f8f9fa;
-  border-right: 2px solid #e9ecef;
+  color: var(--text-secondary);
+  /* پس‌زمینه پیشوند کمی متفاوت یا همان پس‌زمینه ثانویه */
+  background: var(--bg-secondary);
+  border-right: 2px solid var(--border);
   user-select: none;
   pointer-events: none;
 }
@@ -163,6 +183,7 @@
   box-shadow: none !important;
   font-family: "Courier New", monospace;
   letter-spacing: 1px;
+  background: transparent;
 }
 
 .phone-input:focus {
@@ -172,7 +193,7 @@
 
 .phone-error {
   font-size: 13px;
-  color: #fa5252;
+  color: var(--primary-hover);
   margin-left: 4px;
   margin-top: -4px;
   font-weight: 500;
@@ -188,11 +209,12 @@
 }
 
 .order-summary {
-  background: #ffffff;
+  background: var(--bg);
   padding: 32px;
   border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e9ecef;
+  /* سایه ملایم‌تر برای دارک مود و واضح‌تر برای لایت مود */
+  box-shadow: 0 4px 16px var(--shadow-md);
+  border: 1px solid var(--border);
 }
 
 .order-summary-header {
@@ -201,20 +223,20 @@
   gap: 12px;
   margin-bottom: 28px;
   padding-bottom: 20px;
-  border-bottom: 2px solid #e9ecef;
+  border-bottom: 2px solid var(--border);
 }
 
 .order-summary-icon {
   width: 28px;
   height: 28px;
-  color: #ff6b6b;
+  color: var(--primary);
   stroke-width: 2;
 }
 
 .order-summary-header h3 {
   font-size: 20px;
   font-weight: 700;
-  color: #212529;
+  color: var(--text);
   margin: 0;
 }
 
@@ -228,7 +250,7 @@
   align-items: center;
   padding: 14px 0;
   font-size: 15px;
-  color: #495057;
+  color: var(--text-secondary);
 }
 
 .order-summary-row span:first-child {
@@ -237,12 +259,12 @@
 
 .order-summary-row span:last-child {
   font-weight: 600;
-  color: #212529;
+  color: var(--text);
 }
 
 .order-summary-divider {
   height: 1px;
-  background: #e9ecef;
+  background: var(--border);
   margin: 16px 0;
 }
 
@@ -250,11 +272,11 @@
   padding: 20px 0 0 0;
   font-size: 18px;
   font-weight: 700;
-  color: #212529;
+  color: var(--text);
 }
 
 .order-summary-total span:last-child {
-  color: #ff6b6b;
+  color: var(--primary);
   font-size: 24px;
 }
 
@@ -264,15 +286,19 @@
 .payment-button {
   width: 100%;
   padding: 16px 24px;
-  background: linear-gradient(135deg, #ff6b6b 0%, #fa5252 100%);
-  color: white;
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--primary-hover) 100%
+  );
+  color: var(--text-inverse);
   border: none;
   border-radius: 10px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 16px var(--primary-shadow);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -284,7 +310,7 @@
 
 .payment-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+  box-shadow: 0 6px 20px var(--primary-shadow);
 }
 
 .payment-button:active {
@@ -293,6 +319,7 @@
 
 .payment-button svg {
   stroke-width: 2;
+  stroke: var(--text-inverse);
 }
 
 /* ========================================
@@ -304,15 +331,15 @@
   justify-content: center;
   gap: 8px;
   padding: 12px;
-  background: #f8f9fa;
+  background: var(--bg-secondary);
   border-radius: 8px;
   font-size: 13px;
-  color: #495057;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
 .payment-security svg {
-  color: #51cf66;
+  color: #51cf66; /* رنگ سبز امنیتی معمولاً ثابت است یا می‌توان متغیر اضافه کرد */
   stroke-width: 2;
 }
 
@@ -323,7 +350,6 @@
   .place-order {
     gap: 32px;
   }
-
   .place-order-right {
     flex: 0 0 380px;
   }
@@ -333,34 +359,27 @@
   .place-order-wrapper {
     padding: 60px 0 80px;
   }
-
   .place-order {
     flex-direction: column;
     gap: 32px;
   }
-
   .place-order-left,
   .place-order-right {
     max-width: 100%;
     flex: 1;
   }
-
   .place-order-right {
     position: static;
   }
-
   .place-order-left {
     padding: 32px 24px;
   }
-
   .order-summary {
     padding: 28px 24px;
   }
-
   .place-order-left .title {
     font-size: 24px;
   }
-
   .multi-fields {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -371,38 +390,30 @@
   .place-order {
     padding: 0 12px;
   }
-
   .place-order-left {
     padding: 24px 20px;
   }
-
   .order-summary {
     padding: 24px 20px;
   }
-
   .place-order-left .title {
     font-size: 22px;
   }
-
   .place-order-icon {
     width: 40px;
     height: 40px;
   }
-
   .order-summary-header h3 {
     font-size: 18px;
   }
-
   .payment-button {
     padding: 14px 20px;
     font-size: 15px;
   }
-
   .phone-prefix {
     padding: 14px 10px 14px 12px;
     font-size: 14px;
   }
-
   .phone-input {
     font-size: 14px;
   }
@@ -423,11 +434,9 @@
   .payment-button {
     display: none;
   }
-
   .place-order-wrapper {
     background: white;
   }
-
   .place-order-left,
   .order-summary {
     box-shadow: none;
@@ -440,6 +449,6 @@
    ======================================== */
 .place-order-left input:focus-visible,
 .payment-button:focus-visible {
-  outline: 3px solid #ff6b6b;
+  outline: 3px solid var(--primary);
   outline-offset: 2px;
 }

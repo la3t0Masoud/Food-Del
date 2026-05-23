@@ -3,12 +3,14 @@ import "./Navbar.css";
 import { assets } from "../../assets/assets";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
+import { useTheme } from "../../context/ThemeContext/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { getTotalCartAmount } = useContext(StoreContext);
+  const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,7 +26,6 @@ const Navbar = ({ setShowLogin }) => {
     { id: "contact-us", label: "Contact Us", href: "#footer", type: "anchor" },
   ];
 
-  // Handle scroll to section after navigation
   useEffect(() => {
     if (location.hash) {
       const element = document.querySelector(location.hash);
@@ -36,6 +37,16 @@ const Navbar = ({ setShowLogin }) => {
     }
   }, [location]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add("mobile-menu-open");
+    } else {
+      document.body.classList.remove("mobile-menu-open");
+    }
+    return () => document.body.classList.remove("mobile-menu-open");
+  }, [isMobileMenuOpen]);
+
   const handleMenuClick = (id) => {
     setMenu(id);
     setIsMobileMenuOpen(false);
@@ -46,11 +57,9 @@ const Navbar = ({ setShowLogin }) => {
     setMenu(item.id);
     setIsMobileMenuOpen(false);
 
-    // If not on home page, navigate to home first
     if (location.pathname !== "/") {
       navigate("/" + item.href);
     } else {
-      // Already on home page, just scroll
       const element = document.querySelector(item.href);
       if (element) {
         element.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -61,6 +70,8 @@ const Navbar = ({ setShowLogin }) => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const hasCartItems = getTotalCartAmount() > 0;
 
   return (
     <>
@@ -77,6 +88,7 @@ const Navbar = ({ setShowLogin }) => {
           />
         </Link>
 
+        {/* Desktop Navigation Menu */}
         <ul className="navbar-menu" role="navigation">
           {menuItems.map((item) =>
             item.type === "link" ?
@@ -102,9 +114,49 @@ const Navbar = ({ setShowLogin }) => {
         </ul>
 
         <div className="navbar-right">
+          {/* Theme Toggle — desktop only */}
+          <button
+            onClick={toggleTheme}
+            className="navbar-theme-toggle navbar-desktop-only"
+            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            title={isDark ? "Light mode" : "Dark mode"}>
+            <motion.div
+              initial={false}
+              animate={{ rotate: isDark ? 180 : 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}>
+              {isDark ?
+                <svg
+                  className="navbar-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
+                </svg>
+              : <svg
+                  className="navbar-icon"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                  />
+                </svg>
+              }
+            </motion.div>
+          </button>
+
+          {/* Search — desktop only */}
           <Link
             to="/SearchBar"
-            className="navbar-icon-link"
+            className="navbar-icon-link navbar-desktop-only"
             aria-label="Search">
             <svg
               className="navbar-icon"
@@ -120,9 +172,10 @@ const Navbar = ({ setShowLogin }) => {
             </svg>
           </Link>
 
+          {/* Cart — desktop only */}
           <Link
             to="/cart"
-            className="navbar-cart-link"
+            className="navbar-cart-link navbar-desktop-only"
             aria-label="Shopping cart">
             <div className="navbar-cart-icon">
               <svg
@@ -137,20 +190,22 @@ const Navbar = ({ setShowLogin }) => {
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              {getTotalCartAmount() > 0 && (
+              {hasCartItems && (
                 <motion.span
                   className="navbar-cart-badge"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                  aria-label={`${getTotalCartAmount()} items in cart`}></motion.span>
+                  aria-label="Items in cart"
+                />
               )}
             </div>
           </Link>
 
+          {/* Sign In — desktop only */}
           <button
             onClick={() => setShowLogin(true)}
-            className="navbar-signin-btn navbar-signin-desktop"
+            className="navbar-signin-btn navbar-desktop-only"
             aria-label="Sign in to your account">
             <svg
               className="navbar-signin-icon"
@@ -167,22 +222,35 @@ const Navbar = ({ setShowLogin }) => {
             Sign In
           </button>
 
+          {/* Hamburger — mobile/tablet only */}
           <button
             className="navbar-hamburger"
             onClick={toggleMobileMenu}
             aria-label="Toggle mobile menu"
             aria-expanded={isMobileMenuOpen}>
+            {/* Badge on hamburger when cart has items */}
+            {hasCartItems && !isMobileMenuOpen && (
+              <motion.span
+                className="hamburger-cart-badge"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                aria-hidden="true"
+              />
+            )}
             <span
-              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}></span>
+              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
+            />
             <span
-              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}></span>
+              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
+            />
             <span
-              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}></span>
+              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
+            />
           </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Sidebar Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -200,6 +268,7 @@ const Navbar = ({ setShowLogin }) => {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}>
+              {/* Header */}
               <div className="mobile-menu-header">
                 <h2 className="mobile-menu-title">Menu</h2>
                 <button
@@ -222,13 +291,14 @@ const Navbar = ({ setShowLogin }) => {
                 </button>
               </div>
 
-              <ul className="mobile-menu-list">
+              {/* Nav Links */}
+              <ul className="mobile-menu-list" role="navigation">
                 {menuItems.map((item, index) => (
                   <motion.li
                     key={item.id}
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}>
+                    transition={{ delay: index * 0.08 }}>
                     {item.type === "link" ?
                       <Link
                         to={item.to}
@@ -247,11 +317,104 @@ const Navbar = ({ setShowLogin }) => {
                 ))}
               </ul>
 
+              {/* Quick Actions — Search & Cart inside menu */}
+              <motion.div
+                className="mobile-menu-actions"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}>
+                <Link
+                  to="/SearchBar"
+                  className="mobile-action-btn"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Search">
+                  <svg
+                    className="mobile-action-icon"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  Search
+                </Link>
+
+                <Link
+                  to="/cart"
+                  className="mobile-action-btn mobile-cart-btn"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Shopping cart">
+                  <div className="mobile-action-icon-wrap">
+                    <svg
+                      className="mobile-action-icon"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                    {hasCartItems && (
+                      <span className="mobile-cart-badge" aria-hidden="true" />
+                    )}
+                  </div>
+                  Cart
+                </Link>
+              </motion.div>
+
+              {/* Footer — Theme Toggle & Sign In */}
               <motion.div
                 className="mobile-menu-footer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}>
+                <button
+                  onClick={toggleTheme}
+                  className="mobile-theme-toggle"
+                  aria-label={
+                    isDark ? "Switch to light mode" : "Switch to dark mode"
+                  }>
+                  {isDark ?
+                    <>
+                      <svg
+                        className="mobile-theme-icon"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                        />
+                      </svg>
+                      Light Mode
+                    </>
+                  : <>
+                      <svg
+                        className="mobile-theme-icon"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                        />
+                      </svg>
+                      Dark Mode
+                    </>
+                  }
+                </button>
+
                 <button
                   onClick={() => {
                     setShowLogin(true);

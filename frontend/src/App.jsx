@@ -8,6 +8,7 @@ import Footer from "./components/Footer/Footer";
 import LoginPopup from "./components/LoginPopup/LoginPopup";
 import SerachBar from "./pages/SearchBar/SerachBar";
 import DetailsPopup from "./components/DetailsPopup/DetailsPopup";
+import { ThemeProvider } from "./context/ThemeContext/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import "./App.css";
 
@@ -19,34 +20,23 @@ const App = () => {
   const [savedPrices, setSavedPrices] = useState({});
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Handle scroll visibility
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 400) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
+      setShowScrollTop(window.scrollY > 400);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to top function
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <>
-      {showLogin ?
-        <LoginPopup setShowLogin={setShowLogin} />
-      : <></>}
-      {showDetails ?
+    <ThemeProvider>
+      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+      {showDetails && (
         <DetailsPopup
           PDetails={foodDetails}
           setShowDetails={setShowDetails}
@@ -55,7 +45,7 @@ const App = () => {
           savedPrices={savedPrices}
           setSavedPrices={setSavedPrices}
         />
-      : null}
+      )}
       <div className="app">
         <Navbar setShowLogin={setShowLogin} />
         <Routes>
@@ -80,12 +70,11 @@ const App = () => {
                 savedPrices={savedPrices}
               />
             }
-          />{" "}
+          />
         </Routes>
       </div>
       <Footer />
 
-      {/* Scroll to Top Button */}
       <AnimatePresence>
         {showScrollTop && (
           <motion.button
@@ -102,8 +91,7 @@ const App = () => {
               className="scroll-to-top-icon"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
+              viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -114,7 +102,7 @@ const App = () => {
           </motion.button>
         )}
       </AnimatePresence>
-    </>
+    </ThemeProvider>
   );
 };
 

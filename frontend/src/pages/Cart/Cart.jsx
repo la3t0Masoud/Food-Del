@@ -10,7 +10,14 @@ const Cart = ({ savedPrices = {} }) => {
   const navigate = useNavigate();
 
   const getItemPrice = (item) => savedPrices?.[item._id] ?? item.price;
-
+  const cartItemVariants = {
+    rest: { scale: 1 },
+    hover: {
+      scale: 1.08,
+      backgroundColor: "var(--cart-item-bg)",
+      transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
+    },
+  };
   const cartData = useMemo(() => {
     let subtotal = 0;
     let itemCount = 0;
@@ -80,10 +87,18 @@ const Cart = ({ savedPrices = {} }) => {
                   initial={{ opacity: 0, x: 200 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  transition={{ duration: 0.3 }}>
+                  transition={{ duration: 0.3 }}
+                  whileHover="hover" // ← این به همه فرزندان propagate میشه
+                  whileTap="tap">
                   <div className="cart-item-image">
-                    <img src={item.image} alt={item.name} loading="lazy" />
+                    <motion.img
+                      src={item.image}
+                      alt={item.name}
+                      loading="lazy"
+                      variants={cartItemVariants} // ← state رو از parent میگیره
+                    />
                   </div>
+
                   <div className="cart-item-title">
                     <h4>{item.name}</h4>
                     {item.description && (
@@ -194,4 +209,5 @@ const Cart = ({ savedPrices = {} }) => {
   );
 };
 
+//
 export default Cart;
