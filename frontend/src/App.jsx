@@ -71,7 +71,16 @@ const App = () => {
           />
           <Route path="/cart" element={<Cart savedPrices={savedPrices} />} />
           <Route path="/order" element={<PlaceOrder />} />
-          <Route path="/SearchBar" element={<SerachBar />} />
+          <Route
+            path="/SearchBar"
+            element={
+              <SerachBar
+                setShowDetails={setShowDetails}
+                setFoodDetails={setFoodDetails}
+                savedPrices={savedPrices}
+              />
+            }
+          />{" "}
         </Routes>
       </div>
       <Footer />

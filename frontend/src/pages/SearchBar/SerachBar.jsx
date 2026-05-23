@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import FoodItem from "../../components/FoodItem/FoodItem";
 import { StoreContext } from "../../context/StoreContext";
 import "./SearchBar.css";
 
-const SerachBar = () => {
+const SerachBar = ({ setShowDetails, setFoodDetails, savedPrices }) => {
   const [SearchingFood, setSearchingFood] = useState("");
 
   const { food_list } = useContext(StoreContext);
@@ -40,8 +40,13 @@ const SerachBar = () => {
                 id={item._id}
                 name={item.name}
                 description={item.description}
-                price={item.price}
+                price={savedPrices[item._id] || item.price}
                 image={item.image}
+                HaveDetails={item.HaveDetails}
+                Details={item.Details}
+                options={item.options}
+                setShowDetails={setShowDetails}
+                setFoodDetails={setFoodDetails}
               />
             ))}
         </div>
