@@ -11,13 +11,41 @@ import DetailsPopup from "./components/DetailsPopup/DetailsPopup";
 import { ThemeProvider } from "./context/ThemeContext/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import "./App.css";
+import { food_list, SINGLE_SELECT_KEYS } from "./assets/assets";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [foodDetails, setFoodDetails] = useState({});
   const [savedOptions, setSavedOptions] = useState({});
-  const [savedPrices, setSavedPrices] = useState({});
+
+  const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
+
+  const calcDefaultPrice = (item) => {
+    if (!item.HaveDetails || !item.options) return item.price;
+    let total = item.price;
+    Object.entries(item.options).forEach(([key, values]) => {
+      if (!SINGLE_SELECT_KEYS.includes(key)) {
+        values
+          .filter((v) => !v.price || v.price === 0)
+          .forEach((v) => {
+            total += v.price || 0;
+          });
+      }
+    });
+    return total;
+  };
+
+  const [savedPrices, setSavedPrices] = useState(() => {
+    const defaults = {};
+    food_list.forEach((item) => {
+      if (item.HaveDetails) {
+        defaults[item._id] = calcDefaultPrice(item);
+      }
+    });
+    return defaults;
+  });
+
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -38,6 +66,7 @@ const App = () => {
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       {showDetails && (
         <DetailsPopup
+          key={foodDetails._id}
           PDetails={foodDetails}
           setShowDetails={setShowDetails}
           savedOptions={savedOptions}

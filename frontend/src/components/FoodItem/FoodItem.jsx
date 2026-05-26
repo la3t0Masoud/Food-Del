@@ -20,9 +20,18 @@ const FoodItem = ({
 }) => {
   const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
   const handleFoodSelect = () => {
-    setFoodDetails({ id, name, price, description, image, Details, options });
+    setFoodDetails({
+      _id: id,
+      name,
+      price,
+      description,
+      image,
+      Details,
+      options,
+    });
     setShowDetails(true);
   };
+
   return (
     <>
       <motion.div
