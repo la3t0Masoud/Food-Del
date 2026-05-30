@@ -80,7 +80,28 @@ import Chicken from "./Chicken.jpg";
 import Sausage from "./Sausage.jpg";
 
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
-
+export const MULTI_SELECT_KEYS = [
+  "Toppings",
+  "Seasonings",
+  "Vegetables",
+  "Extra_Toppings",
+  "Cheese",
+  "Filling",
+];
+export const ALL_OPTION_KEYS = [...SINGLE_SELECT_KEYS, ...MULTI_SELECT_KEYS];
+export const OPTION_KEY_LABELS = {
+  dough: "Dough",
+  Cooking_Method: "Cooking Method",
+};
+export const Toppings = {
+  Olives,
+  Ham,
+  Mushrooms,
+  Onions,
+  Pepperoni,
+  Chicken,
+  Sausage,
+};
 export const assets = {
   logo,
   basket_icon,
@@ -505,13 +526,13 @@ export const food_list = [
         { name: "Pesto", price: 3, image: food_3 },
       ],
       Toppings: [
-        { name: "pepperoni", price: 0, image: Pepperoni },
-        { name: "chicken", price: 3, image: Chicken },
-        { name: "sausage", price: 2, image: Sausage },
-        { name: "ham", price: 3, image: Ham },
-        { name: "mushrooms", price: 1, image: Mushrooms },
-        { name: "onions", price: 1, image: Onions },
-        { name: "olives", price: 1, image: Olives },
+        { name: "pepperoni", price: 0, image: Toppings.Pepperoni },
+        { name: "chicken", price: 3, image: Toppings.Chicken },
+        { name: "sausage", price: 2, image: Toppings.Sausage },
+        { name: "ham", price: 3, image: Toppings.Ham },
+        { name: "mushrooms", price: 1, image: Toppings.Mushrooms },
+        { name: "onions", price: 1, image: Toppings.Onions },
+        { name: "olives", price: 1, image: Toppings.Olives },
       ],
       Seasonings: [
         { name: "oregano", price: 0, image: food_2 },
