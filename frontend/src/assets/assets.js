@@ -71,6 +71,14 @@ import bag_icon from "./bag_icon.png";
 import logout_icon from "./logout_icon.png";
 import parcel_icon from "./parcel_icon.png";
 
+import Olives from "./Olives.jpg";
+import Ham from "./ham.jpg";
+import Mushrooms from "./Mushrooms.jpg";
+import Onions from "./Onions.jpg";
+import Pepperoni from "./Pepperoni.jpg";
+import Chicken from "./Chicken.jpg";
+import Sausage from "./Sausage.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 
 export const assets = {
@@ -497,13 +505,13 @@ export const food_list = [
         { name: "Pesto", price: 3, image: food_3 },
       ],
       Toppings: [
-        { name: "pepperoni", price: 0, image: food_35 },
-        { name: "chicken", price: 3, image: food_7 },
-        { name: "sausage", price: 2, image: food_6 },
-        { name: "ham", price: 3, image: food_13 },
-        { name: "mushrooms", price: 1, image: food_21 },
-        { name: "onions", price: 1, image: food_22 },
-        { name: "olives", price: 1, image: food_3 },
+        { name: "pepperoni", price: 0, image: Pepperoni },
+        { name: "chicken", price: 3, image: Chicken },
+        { name: "sausage", price: 2, image: Sausage },
+        { name: "ham", price: 3, image: Ham },
+        { name: "mushrooms", price: 1, image: Mushrooms },
+        { name: "onions", price: 1, image: Onions },
+        { name: "olives", price: 1, image: Olives },
       ],
       Seasonings: [
         { name: "oregano", price: 0, image: food_2 },
@@ -630,7 +638,7 @@ export const food_list = [
       Extra_Toppings: [
         { name: "Bacon", price: 0, image: food_13 },
         { name: "Fried egg", price: 2, image: food_9 },
-        { name: "Olives", price: 1, image: food_3 },
+        { name: "Olives", price: 1, image: Olives },
         { name: "Crispy onions", price: 1, image: food_22 },
         { name: "Jalapeños", price: 1, image: food_6 },
       ],

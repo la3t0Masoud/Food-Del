@@ -466,6 +466,7 @@
   padding-bottom: 8px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  padding-top: 2px;
 }
 
 .details-cards-scroll::-webkit-scrollbar {
