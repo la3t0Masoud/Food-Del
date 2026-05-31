@@ -133,6 +133,10 @@ import Parsley from "./Parsley.jpg";
 import redcabbage from "./red cabbage.jpg";
 import Spinach from "./Spinach.jpg";
 
+import boiledEggs from "./boiled eggs.jpg";
+import grilledChicken from "./grilled chicken.jpg";
+import tuna from "./tuna.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -216,6 +220,11 @@ export const Base = {
   Parsley,
   redcabbage,
   Spinach,
+};
+export const Protein = {
+  boiledEggs,
+  grilledChicken,
+  tuna,
 };
 export const assets = {
   logo,
@@ -733,9 +742,9 @@ export const food_list = [
         { name: "basil", price: 1, image: Base.Basil },
       ],
       Protein: [
-        { name: "Grilled chicken", price: 0, image: food_4 },
-        { name: "tuna", price: 2, image: food_7 },
-        { name: "boiled eggs", price: 1, image: food_9 },
+        { name: "Grilled chicken", price: 0, image: Protein.grilledChicken },
+        { name: "tuna", price: 2, image: Protein.tuna },
+        { name: "boiled eggs", price: 1, image: Protein.boiledEggs },
       ],
       Toppings: [
         { name: "Olives", price: 0, image: food_3 },
