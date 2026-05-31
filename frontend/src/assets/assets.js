@@ -79,6 +79,12 @@ import Pepperoni from "./Pepperoni.jpg";
 import Chicken from "./Chicken.jpg";
 import Sausage from "./Sausage.jpg";
 
+import AmericanDrough from "./American.jpg";
+import ItalianDrough from "./Italian.jpg";
+import ThinCrustDrough from "./Thin crust.jpg";
+import StuffedCrustDrough from "./Stuffed crust.jpg";
+import NeapolitanStyleDrough from "./Neapolitan style.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -101,6 +107,13 @@ export const Toppings = {
   Pepperoni,
   Chicken,
   Sausage,
+};
+export const Drough = {
+  AmericanDrough,
+  ItalianDrough,
+  ThinCrustDrough,
+  StuffedCrustDrough,
+  NeapolitanStyleDrough,
 };
 export const assets = {
   logo,
@@ -504,11 +517,15 @@ export const food_list = [
     HaveDetails: true,
     options: {
       dough: [
-        { name: "Italian", price: 0, image: food_34 },
-        { name: "American", price: 4, image: food_33 },
-        { name: "Thin crust", price: 6, image: food_35 },
-        { name: "Neapolitan style", price: 7, image: food_36 },
-        { name: "Stuffed crust", price: 8, image: food_34 },
+        { name: "Italian", price: 0, image: Drough.ItalianDrough },
+        { name: "American", price: 4, image: Drough.AmericanDrough },
+        { name: "Thin crust", price: 6, image: Drough.ThinCrustDrough },
+        {
+          name: "Neapolitan style",
+          price: 7,
+          image: Drough.NeapolitanStyleDrough,
+        },
+        { name: "Stuffed crust", price: 8, image: Drough.StuffedCrustDrough },
       ],
       cheese: [
         { name: "Mozzarella", price: 0, image: food_12 },
