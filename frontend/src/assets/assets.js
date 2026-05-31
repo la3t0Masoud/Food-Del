@@ -92,6 +92,12 @@ import VeganCheese from "./Vegan Cheese.jpg";
 import Cheddar from "./Cheddar.jpg";
 import Mozzarella from "./Mozzarella.jpg";
 
+import AlfredoSauce from "./Alfredo Sauce.jpg";
+import BBQ from "./BBQ.jpg";
+import GarlicSauce from "./Garlic Sauce.jpg";
+import Pesto from "./Pesto.jpg";
+import Tomato from "./Tomato.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -129,6 +135,13 @@ export const Cheese = {
   VeganCheese,
   Cheddar,
   Mozzarella,
+};
+export const Sauce = {
+  AlfredoSauce,
+  BBQ,
+  GarlicSauce,
+  Pesto,
+  Tomato,
 };
 export const assets = {
   logo,
@@ -551,11 +564,11 @@ export const food_list = [
         { name: "Gorgonzola", price: 6, image: Cheese.Gorgonzola },
       ],
       sauce: [
-        { name: "Tomato", price: 0, image: food_26 },
-        { name: "BBQ", price: 3, image: food_28 },
-        { name: "Alfredo Sauce", price: 4, image: food_27 },
-        { name: "garlic sauce", price: 2, image: food_21 },
-        { name: "Pesto", price: 3, image: food_3 },
+        { name: "Tomato", price: 0, image: Sauce.Tomato },
+        { name: "BBQ", price: 3, image: Sauce.BBQ },
+        { name: "Alfredo Sauce", price: 4, image: Sauce.AlfredoSauce },
+        { name: "garlic sauce", price: 2, image: Sauce.GarlicSauce },
+        { name: "Pesto", price: 3, image: Sauce.Pesto },
       ],
       Toppings: [
         { name: "pepperoni", price: 0, image: Toppings.Pepperoni },
