@@ -115,6 +115,10 @@ import shreddedlamb from "./shredded lamb.jpg";
 import Chicken1 from "./Chicken1.jpg";
 import Sausage1 from "./Sausage1.jpg";
 
+import PuffPastry from "./Puff Pastry.jpg";
+import RicePaper from "./Rice Paper.jpg";
+import TortillaWraps from "./Tortilla Wraps.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -179,6 +183,11 @@ export const Fillings = {
   shreddedlamb,
   Chicken1,
   Sausage1,
+};
+export const Bread = {
+  TortillaWraps,
+  RicePaper,
+  PuffPastry,
 };
 
 export const assets = {
@@ -659,9 +668,9 @@ export const food_list = [
         { name: "shredded lamb", price: 4, image: Fillings.shreddedlamb },
       ],
       Bread: [
-        { name: "Tortilla wraps", price: 0, image: food_8 },
-        { name: "Rice paper", price: 1, image: food_5 },
-        { name: "Puff pastry", price: 2, image: food_16 },
+        { name: "Tortilla wraps", price: 0, image: Bread.TortillaWraps },
+        { name: "Rice paper", price: 1, image: Bread.RicePaper },
+        { name: "Puff pastry", price: 2, image: Bread.PuffPastry },
       ],
       sauce: [
         { name: "Chili sauce", price: 0, image: food_26 },
