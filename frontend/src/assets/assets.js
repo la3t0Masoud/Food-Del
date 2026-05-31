@@ -122,6 +122,11 @@ import TortillaWraps from "./Tortilla Wraps.jpg";
 import ChiliSauce from "./Chili Sauce.jpg";
 import Mustard from "./Mustard.jpg";
 
+import cumin from "./cumin.jpg";
+import Curry from "./Curry.jpg";
+import paprika from "./paprika.jpg";
+import Turmeric from "./Turmeric.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -176,6 +181,10 @@ export const Seasonings = {
   Oregano,
   RedPepperFlakes,
   Thyme,
+  cumin,
+  Curry,
+  paprika,
+  Turmeric,
 };
 export const CookingMethods = {
   grilledpizza,
@@ -683,11 +692,11 @@ export const food_list = [
         { name: "Pesto", price: 3, image: Sauce.Pesto },
       ],
       Seasonings: [
-        { name: "Black pepper", price: 0, image: food_24 },
-        { name: "paprika", price: 2, image: food_22 },
-        { name: "cumin", price: 2, image: food_23 },
-        { name: "curry", price: 3, image: food_28 },
-        { name: "turmeric", price: 2, image: food_21 },
+        { name: "Black pepper", price: 0, image: Seasonings.BlackPepper },
+        { name: "paprika", price: 2, image: Seasonings.paprika },
+        { name: "cumin", price: 2, image: Seasonings.cumin },
+        { name: "curry", price: 3, image: Seasonings.Curry },
+        { name: "turmeric", price: 2, image: Seasonings.Turmeric },
       ],
     },
   },
