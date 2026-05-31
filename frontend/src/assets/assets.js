@@ -110,6 +110,11 @@ import panpizza from "./pan pizza.jpg";
 import regularoven from "./regular oven.jpg";
 import woodfiredoven from "./wood fired oven.jpg";
 
+import Bacon from "./Bacon.jpg";
+import shreddedlamb from "./shredded lamb.jpg";
+import Chicken1 from "./Chicken1.jpg";
+import Sausage1 from "./Sausage1.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -169,6 +174,13 @@ export const CookingMethods = {
   regularoven,
   woodfiredoven,
 };
+export const Fillings = {
+  Bacon,
+  shreddedlamb,
+  Chicken1,
+  Sausage1,
+};
+
 export const assets = {
   logo,
   basket_icon,
@@ -641,10 +653,10 @@ export const food_list = [
     HaveDetails: true,
     options: {
       Filling: [
-        { name: "Chicken", price: 0, image: food_7 },
-        { name: "bacon", price: 2, image: food_13 },
-        { name: "sausage", price: 2, image: food_6 },
-        { name: "shredded lamb", price: 4, image: food_4 },
+        { name: "Chicken", price: 0, image: Fillings.Chicken1 },
+        { name: "bacon", price: 2, image: Fillings.Bacon },
+        { name: "sausage", price: 2, image: Fillings.Sausage1 },
+        { name: "shredded lamb", price: 4, image: Fillings.shreddedlamb },
       ],
       Bread: [
         { name: "Tortilla wraps", price: 0, image: food_8 },
