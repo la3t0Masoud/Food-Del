@@ -119,6 +119,9 @@ import PuffPastry from "./Puff Pastry.jpg";
 import RicePaper from "./Rice Paper.jpg";
 import TortillaWraps from "./Tortilla Wraps.jpg";
 
+import ChiliSauce from "./Chili Sauce.jpg";
+import Mustard from "./Mustard.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -163,6 +166,8 @@ export const Sauce = {
   GarlicSauce,
   Pesto,
   Tomato,
+  Mustard,
+  ChiliSauce,
 };
 export const Seasonings = {
   Basil,
@@ -673,9 +678,9 @@ export const food_list = [
         { name: "Puff pastry", price: 2, image: Bread.PuffPastry },
       ],
       sauce: [
-        { name: "Chili sauce", price: 0, image: food_26 },
-        { name: "Mustard", price: 1, image: food_20 },
-        { name: "Pesto", price: 3, image: food_3 },
+        { name: "Chili sauce", price: 0, image: Sauce.ChiliSauce },
+        { name: "Mustard", price: 1, image: Sauce.Mustard },
+        { name: "Pesto", price: 3, image: Sauce.Pesto },
       ],
       Seasonings: [
         { name: "Black pepper", price: 0, image: food_24 },
