@@ -150,7 +150,12 @@ import Beef from "./Beef.jpg";
 import roastBeef from "./roast beef.jpg";
 import Steak from "./Steak.jpg";
 import veggiePatties from "./veggie patties.jpg";
-// import Sourdough from "./Sourdough.jpg";
+
+import Avocado from "./Avocado.jpg";
+import Coleslaw from "./Coleslaw.jpg";
+import Cucumber from "./Cucumber.jpg";
+import Onion from "./Onion.jpg";
+import Pickles from "./Pickles.jpg";
 
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
@@ -256,6 +261,16 @@ export const MainFilling = {
   veggiePatties,
   grilledChicken,
 };
+export const Vegetable = {
+  Avocado,
+  Coleslaw,
+  Cucumber,
+  Onion,
+  Pickles,
+  Tomato,
+  lettuce,
+};
+
 export const assets = {
   logo,
   basket_icon,
@@ -825,13 +840,13 @@ export const food_list = [
         { name: "veggie patties", price: 2, image: MainFilling.veggiePatties },
       ],
       Vegetables: [
-        { name: "Lettuce", price: 0, image: food_1 },
-        { name: "Tomato", price: 1, image: food_26 },
-        { name: "Cucumber", price: 1, image: food_2 },
-        { name: "Onion", price: 1, image: food_22 },
-        { name: "Pickles", price: 1, image: food_3 },
-        { name: "Avocado", price: 2, image: food_24 },
-        { name: "Coleslaw", price: 1, image: food_23 },
+        { name: "Lettuce", price: 0, image: Vegetable.lettuce },
+        { name: "Tomato", price: 1, image: Vegetable.Tomato },
+        { name: "Cucumber", price: 1, image: Vegetable.Cucumber },
+        { name: "Onion", price: 1, image: Vegetable.Onion },
+        { name: "Pickles", price: 1, image: Vegetable.Pickles },
+        { name: "Avocado", price: 2, image: Vegetable.Avocado },
+        { name: "Coleslaw", price: 1, image: Vegetable.Coleslaw },
       ],
       Cheese: [
         { name: "Cheddar", price: 0, image: food_20 },
