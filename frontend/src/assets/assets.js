@@ -144,7 +144,13 @@ import Bagel from "./Bagel.jpg";
 import Baguette from "./Baguette.jpg";
 import Brioche from "./Brioche.jpg";
 import Ciabatta from "./Ciabatta.jpg";
-import Sourdough from "./Toasted bread croutons.jpg";
+import Sourdough from "./Sourdough.jpg";
+
+import Beef from "./Beef.jpg";
+import roastBeef from "./roast beef.jpg";
+import Steak from "./Steak.jpg";
+import veggiePatties from "./veggie patties.jpg";
+// import Sourdough from "./Sourdough.jpg";
 
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
@@ -170,7 +176,7 @@ export const Toppings = {
   Sausage,
   CaramelizedOnions,
   sunDriedTomatoes,
-  tuToastedBreadCroutonsna,
+  Sourdough,
 };
 export const Drough = {
   AmericanDrough,
@@ -242,6 +248,13 @@ export const Protein = {
   boiledEggs,
   grilledChicken,
   tuna,
+};
+export const MainFilling = {
+  Beef,
+  roastBeef,
+  Steak,
+  veggiePatties,
+  grilledChicken,
 };
 export const assets = {
   logo,
@@ -801,11 +814,15 @@ export const food_list = [
         { name: "Bagel", price: 1, image: Bread.Bagel },
       ],
       Main_Filling: [
-        { name: "Grilled chicken", price: 0, image: food_7 },
-        { name: "Beef", price: 4, image: food_28 },
-        { name: "roast beef", price: 4, image: food_33 },
-        { name: "steak", price: 5, image: food_4 },
-        { name: "veggie patties", price: 2, image: food_23 },
+        {
+          name: "Grilled chicken",
+          price: 0,
+          image: MainFilling.grilledChicken,
+        },
+        { name: "Beef", price: 4, image: MainFilling.Beef },
+        { name: "roast beef", price: 4, image: MainFilling.roastBeef },
+        { name: "steak", price: 5, image: MainFilling.Steak },
+        { name: "veggie patties", price: 2, image: MainFilling.veggiePatties },
       ],
       Vegetables: [
         { name: "Lettuce", price: 0, image: food_1 },
