@@ -98,6 +98,13 @@ import GarlicSauce from "./Garlic Sauce.jpg";
 import Pesto from "./Pesto.jpg";
 import Tomato from "./Tomato.jpg";
 
+import Basil from "./Basil.jpg";
+import BlackPepper from "./Black Pepper.jpg";
+import Garlic from "./Garlic.jpg";
+import Oregano from "./Oregano.jpg";
+import RedPepperFlakes from "./Red Pepper Flakes.jpg";
+import Thyme from "./Thyme.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -142,6 +149,14 @@ export const Sauce = {
   GarlicSauce,
   Pesto,
   Tomato,
+};
+export const Seasonings = {
+  Basil,
+  BlackPepper,
+  Garlic,
+  Oregano,
+  RedPepperFlakes,
+  Thyme,
 };
 export const assets = {
   logo,
@@ -580,12 +595,16 @@ export const food_list = [
         { name: "olives", price: 1, image: Toppings.Olives },
       ],
       Seasonings: [
-        { name: "oregano", price: 0, image: food_2 },
-        { name: "basil", price: 2, image: food_3 },
-        { name: "garlic", price: 2, image: food_21 },
-        { name: "thyme", price: 2, image: food_23 },
-        { name: "red pepper flakes", price: 2, image: food_22 },
-        { name: "black pepper", price: 2, image: food_24 },
+        { name: "oregano", price: 0, image: Seasonings.Oregano },
+        { name: "basil", price: 2, image: Seasonings.Basil },
+        { name: "garlic", price: 2, image: Seasonings.Garlic },
+        { name: "thyme", price: 2, image: Seasonings.Thyme },
+        {
+          name: "red pepper flakes",
+          price: 2,
+          image: Seasonings.RedPepperFlakes,
+        },
+        { name: "black pepper", price: 2, image: Seasonings.BlackPepper },
       ],
       Cooking_Method: [
         { name: "wood fired oven", price: 0, image: food_33 },
