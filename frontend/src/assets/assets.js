@@ -85,6 +85,13 @@ import ThinCrustDrough from "./Thin crust.jpg";
 import StuffedCrustDrough from "./Stuffed crust.jpg";
 import NeapolitanStyleDrough from "./Neapolitan style.jpg";
 
+import Gorgonzola from "./Gorgonzola.jpg";
+import Feta from "./Feta.jpg";
+import Parmesan from "./Parmesan.jpg";
+import VeganCheese from "./Vegan Cheese.jpg";
+import Cheddar from "./Cheddar.jpg";
+import Mozzarella from "./Mozzarella.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -114,6 +121,14 @@ export const Drough = {
   ThinCrustDrough,
   StuffedCrustDrough,
   NeapolitanStyleDrough,
+};
+export const Cheese = {
+  Gorgonzola,
+  Feta,
+  Parmesan,
+  VeganCheese,
+  Cheddar,
+  Mozzarella,
 };
 export const assets = {
   logo,
@@ -528,12 +543,12 @@ export const food_list = [
         { name: "Stuffed crust", price: 8, image: Drough.StuffedCrustDrough },
       ],
       cheese: [
-        { name: "Mozzarella", price: 0, image: food_12 },
-        { name: "Cheddar", price: 4, image: food_20 },
-        { name: "Vegan", price: 2, image: food_18 },
-        { name: "Parmesan", price: 5, image: food_25 },
-        { name: "Feta", price: 4, image: food_1 },
-        { name: "Gorgonzola", price: 6, image: food_27 },
+        { name: "Mozzarella", price: 0, image: Cheese.Mozzarella },
+        { name: "Cheddar", price: 4, image: Cheese.Cheddar },
+        { name: "Vegan", price: 2, image: Cheese.VeganCheese },
+        { name: "Parmesan", price: 5, image: Cheese.Parmesan },
+        { name: "Feta", price: 4, image: Cheese.Feta },
+        { name: "Gorgonzola", price: 6, image: Cheese.Gorgonzola },
       ],
       sauce: [
         { name: "Tomato", price: 0, image: food_26 },
