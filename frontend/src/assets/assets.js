@@ -105,6 +105,11 @@ import Oregano from "./Oregano.jpg";
 import RedPepperFlakes from "./Red Pepper Flakes.jpg";
 import Thyme from "./Thyme.jpg";
 
+import grilledpizza from "./grilled pizza.jpg";
+import panpizza from "./pan pizza.jpg";
+import regularoven from "./regular oven.jpg";
+import woodfiredoven from "./wood fired oven.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -157,6 +162,12 @@ export const Seasonings = {
   Oregano,
   RedPepperFlakes,
   Thyme,
+};
+export const CookingMethods = {
+  grilledpizza,
+  panpizza,
+  regularoven,
+  woodfiredoven,
 };
 export const assets = {
   logo,
@@ -607,10 +618,15 @@ export const food_list = [
         { name: "black pepper", price: 2, image: Seasonings.BlackPepper },
       ],
       Cooking_Method: [
-        { name: "wood fired oven", price: 0, image: food_33 },
-        { name: "regular oven", price: 0, image: food_34 },
-        { name: "pan pizza", price: 0, image: food_36 },
-        { name: "grilled pizza", price: 0, image: food_35 },
+        { name: "regular oven", price: 0, image: CookingMethods.regularoven },
+
+        {
+          name: "wood fired oven",
+          price: 0,
+          image: CookingMethods.woodfiredoven,
+        },
+        { name: "pan pizza", price: 0, image: CookingMethods.panpizza },
+        { name: "grilled pizza", price: 0, image: CookingMethods.grilledpizza },
       ],
     },
   },
