@@ -127,6 +127,12 @@ import Curry from "./Curry.jpg";
 import paprika from "./paprika.jpg";
 import Turmeric from "./Turmeric.jpg";
 
+import arugula from "./arugula.jpg";
+import lettuce from "./lettuce.jpg";
+import Parsley from "./Parsley.jpg";
+import redcabbage from "./red cabbage.jpg";
+import Spinach from "./Spinach.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -203,7 +209,14 @@ export const Bread = {
   RicePaper,
   PuffPastry,
 };
-
+export const Base = {
+  Basil,
+  arugula,
+  lettuce,
+  Parsley,
+  redcabbage,
+  Spinach,
+};
 export const assets = {
   logo,
   basket_icon,
@@ -711,13 +724,13 @@ export const food_list = [
     HaveDetails: true,
     options: {
       Base: [
-        { name: "lettuce", price: 0, image: food_1 },
-        { name: "spinach", price: 1, image: food_2 },
-        { name: "cabbage", price: 1, image: food_3 },
-        { name: "arugula", price: 1, image: food_23 },
-        { name: "parsley", price: 1, image: food_21 },
-        { name: "red cabbage", price: 1, image: food_22 },
-        { name: "basil", price: 1, image: food_24 },
+        { name: "lettuce", price: 0, image: Base.lettuce },
+        { name: "spinach", price: 1, image: Base.Spinach },
+        // { name: "cabbage", price: 1, image: food_3 },
+        { name: "arugula", price: 1, image: Base.arugula },
+        { name: "parsley", price: 1, image: Base.Parsley },
+        { name: "red cabbage", price: 1, image: Base.redcabbage },
+        { name: "basil", price: 1, image: Base.Basil },
       ],
       Protein: [
         { name: "Grilled chicken", price: 0, image: food_4 },
