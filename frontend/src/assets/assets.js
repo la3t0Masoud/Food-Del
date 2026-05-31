@@ -97,6 +97,7 @@ import BBQ from "./BBQ.jpg";
 import GarlicSauce from "./Garlic Sauce.jpg";
 import Pesto from "./Pesto.jpg";
 import Tomato from "./Tomato.jpg";
+import Tomato2 from "./Tomato2.jpg";
 
 import Basil from "./Basil.jpg";
 import BlackPepper from "./Black Pepper.jpg";
@@ -131,6 +132,7 @@ import arugula from "./arugula.jpg";
 import lettuce from "./lettuce.jpg";
 import Parsley from "./Parsley.jpg";
 import redcabbage from "./red cabbage.jpg";
+import cabbage from "./cabbage.jpg";
 import Spinach from "./Spinach.jpg";
 
 import boiledEggs from "./boiled eggs.jpg";
@@ -158,6 +160,10 @@ import Onion from "./Onion.jpg";
 import Pickles from "./Pickles.jpg";
 
 import Swiss from "./Swiss.jpg";
+
+import CrispyOnions from "./Crispy onions.jpg";
+import FriedEgg from "./Fried egg.jpg";
+import Jalapeños from "./Jalapeños.jpg";
 
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
@@ -249,6 +255,7 @@ export const Base = {
   arugula,
   lettuce,
   Parsley,
+  cabbage,
   redcabbage,
   Spinach,
 };
@@ -271,9 +278,16 @@ export const Vegetable = {
   Onion,
   Pickles,
   Tomato,
+  Tomato2,
   lettuce,
 };
-
+export const Extra_Toppings = {
+  CrispyOnions,
+  FriedEgg,
+  Jalapeños,
+  Bacon,
+  Olives,
+};
 export const assets = {
   logo,
   basket_icon,
@@ -783,7 +797,7 @@ export const food_list = [
       Base: [
         { name: "lettuce", price: 0, image: Base.lettuce },
         { name: "spinach", price: 1, image: Base.Spinach },
-        // { name: "cabbage", price: 1, image: food_3 },
+        { name: "cabbage", price: 1, image: Base.cabbage },
         { name: "arugula", price: 1, image: Base.arugula },
         { name: "parsley", price: 1, image: Base.Parsley },
         { name: "red cabbage", price: 1, image: Base.redcabbage },
@@ -844,7 +858,7 @@ export const food_list = [
       ],
       Vegetables: [
         { name: "Lettuce", price: 0, image: Vegetable.lettuce },
-        { name: "Tomato", price: 1, image: Vegetable.Tomato },
+        { name: "Tomato", price: 1, image: Vegetable.Tomato2 },
         { name: "Cucumber", price: 1, image: Vegetable.Cucumber },
         { name: "Onion", price: 1, image: Vegetable.Onion },
         { name: "Pickles", price: 1, image: Vegetable.Pickles },
@@ -858,11 +872,11 @@ export const food_list = [
         { name: "Feta", price: 1, image: Cheese.Feta },
       ],
       Extra_Toppings: [
-        { name: "Bacon", price: 0, image: food_13 },
-        { name: "Fried egg", price: 2, image: food_9 },
-        { name: "Olives", price: 1, image: Olives },
-        { name: "Crispy onions", price: 1, image: food_22 },
-        { name: "Jalapeños", price: 1, image: food_6 },
+        { name: "Bacon", price: 0, image: Extra_Toppings.Bacon },
+        { name: "Fried egg", price: 2, image: Extra_Toppings.FriedEgg },
+        { name: "Olives", price: 1, image: Extra_Toppings.Olives },
+        { name: "Crispy onions", price: 1, image: Extra_Toppings.CrispyOnions },
+        { name: "Jalapeños", price: 1, image: Extra_Toppings.Jalapeños },
       ],
     },
   },
