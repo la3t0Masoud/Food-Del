@@ -157,6 +157,8 @@ import Cucumber from "./Cucumber.jpg";
 import Onion from "./Onion.jpg";
 import Pickles from "./Pickles.jpg";
 
+import Swiss from "./Swiss.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -197,6 +199,7 @@ export const Cheese = {
   VeganCheese,
   Cheddar,
   Mozzarella,
+  Swiss,
 };
 export const Sauce = {
   AlfredoSauce,
@@ -849,10 +852,10 @@ export const food_list = [
         { name: "Coleslaw", price: 1, image: Vegetable.Coleslaw },
       ],
       Cheese: [
-        { name: "Cheddar", price: 0, image: food_20 },
-        { name: "Mozzarella", price: 1, image: food_12 },
-        { name: "Swiss", price: 1, image: food_25 },
-        { name: "Feta", price: 1, image: food_1 },
+        { name: "Cheddar", price: 0, image: Cheese.Cheddar },
+        { name: "Mozzarella", price: 1, image: Cheese.Mozzarella },
+        { name: "Swiss", price: 1, image: Cheese.Swiss },
+        { name: "Feta", price: 1, image: Cheese.Feta },
       ],
       Extra_Toppings: [
         { name: "Bacon", price: 0, image: food_13 },
