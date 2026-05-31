@@ -137,6 +137,10 @@ import boiledEggs from "./boiled eggs.jpg";
 import grilledChicken from "./grilled chicken.jpg";
 import tuna from "./tuna.jpg";
 
+import CaramelizedOnions from "./Caramelized Onions.jpg";
+import sunDriedTomatoes from "./sun-dried tomatoes.jpg";
+import tuToastedBreadCroutonsna from "./Toasted bread croutons.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -159,6 +163,9 @@ export const Toppings = {
   Pepperoni,
   Chicken,
   Sausage,
+  CaramelizedOnions,
+  sunDriedTomatoes,
+  tuToastedBreadCroutonsna,
 };
 export const Drough = {
   AmericanDrough,
@@ -747,10 +754,22 @@ export const food_list = [
         { name: "boiled eggs", price: 1, image: Protein.boiledEggs },
       ],
       Toppings: [
-        { name: "Olives", price: 0, image: food_3 },
-        { name: "caramelized onions", price: 1, image: food_22 },
-        { name: "sun-dried tomatoes", price: 1, image: food_26 },
-        { name: "Toasted bread croutons", price: 1, image: food_16 },
+        { name: "Olives", price: 0, image: Toppings.Olives },
+        {
+          name: "caramelized onions",
+          price: 1,
+          image: Toppings.CaramelizedOnions,
+        },
+        {
+          name: "sun-dried tomatoes",
+          price: 1,
+          image: Toppings.sunDriedTomatoes,
+        },
+        {
+          name: "Toasted bread croutons",
+          price: 1,
+          image: Toppings.tuToastedBreadCroutonsna,
+        },
       ],
     },
   },
