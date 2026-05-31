@@ -139,7 +139,12 @@ import tuna from "./tuna.jpg";
 
 import CaramelizedOnions from "./Caramelized Onions.jpg";
 import sunDriedTomatoes from "./sun-dried tomatoes.jpg";
-import tuToastedBreadCroutonsna from "./Toasted bread croutons.jpg";
+
+import Bagel from "./Bagel.jpg";
+import Baguette from "./Baguette.jpg";
+import Brioche from "./Brioche.jpg";
+import Ciabatta from "./Ciabatta.jpg";
+import Sourdough from "./Toasted bread croutons.jpg";
 
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
@@ -219,6 +224,11 @@ export const Bread = {
   TortillaWraps,
   RicePaper,
   PuffPastry,
+  Bagel,
+  Baguette,
+  Brioche,
+  Ciabatta,
+  Sourdough,
 };
 export const Base = {
   Basil,
@@ -784,11 +794,11 @@ export const food_list = [
     HaveDetails: true,
     options: {
       Bread: [
-        { name: "Baguette", price: 0, image: food_16 },
-        { name: "Sourdough", price: 1, image: food_15 },
-        { name: "Brioche", price: 2, image: food_17 },
-        { name: "Ciabatta", price: 1, image: food_14 },
-        { name: "Bagel", price: 1, image: food_20 },
+        { name: "Baguette", price: 0, image: Bread.Baguette },
+        { name: "Sourdough", price: 1, image: Bread.Sourdough },
+        { name: "Brioche", price: 2, image: Bread.Brioche },
+        { name: "Ciabatta", price: 1, image: Bread.Ciabatta },
+        { name: "Bagel", price: 1, image: Bread.Bagel },
       ],
       Main_Filling: [
         { name: "Grilled chicken", price: 0, image: food_7 },
