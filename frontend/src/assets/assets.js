@@ -165,6 +165,8 @@ import CrispyOnions from "./Crispy onions.jpg";
 import FriedEgg from "./Fried egg.jpg";
 import Jalapeños from "./Jalapeños.jpg";
 
+import tuToastedBreadCroutonsna from "./Toasted bread croutons.jpg";
+
 export const SINGLE_SELECT_KEYS = ["dough", "Cooking_Method", "Bread"];
 export const MULTI_SELECT_KEYS = [
   "Toppings",
@@ -190,6 +192,7 @@ export const Toppings = {
   CaramelizedOnions,
   sunDriedTomatoes,
   Sourdough,
+  tuToastedBreadCroutonsna,
 };
 export const Drough = {
   AmericanDrough,
