@@ -266,9 +266,6 @@
 /* .hamburger-line.open:nth-child(4) {
   /* transform: translateY(-9.5px) rotate(-45deg);
 } */
-*/
-
-/* Badge on hamburger button */
 .hamburger-cart-badge {
   position: absolute;
   top: -4px;
@@ -284,6 +281,11 @@
   border: 2px solid var(--bg);
   box-shadow: 0 1px 4px var(--primary-shadow);
   pointer-events: none;
+  /* جلوگیری از تداخل با transition عمومی * در ThemeContext.css */
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease !important;
 }
 
 /* ========================================
