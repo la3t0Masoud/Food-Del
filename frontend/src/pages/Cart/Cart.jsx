@@ -81,7 +81,7 @@ const Cart = ({ savedPrices = {} }) => {
   }, [food_list, cartItems, savedPrices, charityOption]);
 
   // بعد از useMemo:
-  const discountAmount = (cartData.subtotal * discount) / 100;
+  const discountAmount = (cartData.total * discount) / 100;
   const finalTotal = cartData.total - discountAmount;
 
   const isEmpty = cartData.items.length === 0;
@@ -343,16 +343,13 @@ const Cart = ({ savedPrices = {} }) => {
                         "$0"
                       : `$${cartData.deliveryFee.toFixed(1)}`}
                     </span>
-                    {discount > 0 && (
-                      <div
-                        className="cart-total-row"
-                        style={{ color: "green" }}>
-                        <span>Discount ({discount}%)</span>
-                        <span>-${discountAmount.toFixed(0)}</span>
-                      </div>
-                    )}
                   </div>
-
+                  {discount > 0 && (
+                    <div className="cart-total-row" style={{ color: "green" }}>
+                      <span>Discount ({discount}%)</span>
+                      <span>-${discountAmount.toFixed(2)}</span>
+                    </div>
+                  )}
                   <AnimatePresence>
                     {charityOption === "match" && (
                       <motion.div
@@ -384,7 +381,7 @@ const Cart = ({ savedPrices = {} }) => {
                   <div className="cart-total-divider"></div>
                   <div className="cart-total-row cart-total-final">
                     <span>Total</span>
-                    <span>${finalTotal.toFixed(1)}</span>{" "}
+                    <span>${finalTotal.toFixed(2)}</span>{" "}
                   </div>
                 </div>
 
