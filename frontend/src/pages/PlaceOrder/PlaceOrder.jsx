@@ -5,14 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
 // --- Discount code generator (simple, client-side for demo) ---
-const generateDiscountCode = (prefix) => {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let code = prefix + "-";
-  for (let i = 0; i < 8; i++) {
-    code += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return code;
-};
+import {
+  generateUniqueCode,
+  saveDiscountCode,
+} from "../../utils/discountManager";
 
 const PlaceOrder = () => {
   // const { getTotalCartAmount } = useContext(StoreContext);
@@ -49,9 +45,11 @@ const PlaceOrder = () => {
     // Generate discount code based on charity option
     let code = null;
     if (charityOption === "full") {
-      code = generateDiscountCode("GIVE20");
+      code = generateUniqueCode("GIVE20");
+      saveDiscountCode(code, 20);
     } else if (charityOption === "match") {
-      code = generateDiscountCode("CARE10");
+      code = generateUniqueCode("CARE10");
+      saveDiscountCode(code, 10);
     }
 
     setDiscountCode(code);

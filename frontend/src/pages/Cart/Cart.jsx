@@ -3,8 +3,27 @@ import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { validateCode, redeemCode } from "../../utils/discountManager";
 
 const Cart = ({ savedPrices = {} }) => {
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState(0); // درصد تخفیف
+  const [promoMsg, setPromoMsg] = useState("");
+  // const discountAmount = (subtotal * discount) / 100;
+  // const total = subtotal + deliveryFee + charityMatchAmount - discountAmount;
+  // و discountAmount رو به return اضافه کن
+  const handleApplyPromo = () => {
+    const percent = validateCode(promoCode.trim().toUpperCase());
+    if (percent !== null) {
+      setDiscount(percent);
+      redeemCode(promoCode.trim().toUpperCase());
+      setPromoMsg(`✅ ${percent}% discount applied!`);
+    } else {
+      setPromoMsg("❌ Invalid or already used code.");
+      setDiscount(0);
+    }
+  };
+
   const { cartItems, food_list, removeFromCart, getTotalCartAmount } =
     useContext(StoreContext);
   const navigate = useNavigate();
@@ -48,7 +67,8 @@ const Cart = ({ savedPrices = {} }) => {
     const charityMatchAmount =
       charityOption === "match" && subtotal > 0 ? subtotal : 0;
 
-    const total = subtotal + deliveryFee + charityMatchAmount;
+    const total = subtotal + deliveryFee + charityMatchAmount; // این خط همینجا بمونه
+    // discountAmount رو اینجا حساب نکن چون discount یه state خارجیه
 
     return {
       items,
@@ -59,6 +79,10 @@ const Cart = ({ savedPrices = {} }) => {
       itemCount,
     };
   }, [food_list, cartItems, savedPrices, charityOption]);
+
+  // بعد از useMemo:
+  const discountAmount = (cartData.subtotal * discount) / 100;
+  const finalTotal = cartData.total - discountAmount;
 
   const isEmpty = cartData.items.length === 0;
 
@@ -276,10 +300,19 @@ const Cart = ({ savedPrices = {} }) => {
                   <input
                     type="text"
                     placeholder="Promo code"
+                    value={promoCode}
+                    onChange={(e) => setPromoCode(e.target.value)}
                     aria-label="Promo code"
                   />
-                  <button type="button">Apply</button>
+                  <button type="button" onClick={handleApplyPromo}>
+                    Apply
+                  </button>
                 </div>
+                {promoMsg && (
+                  <p style={{ fontSize: "0.85rem", marginTop: "6px" }}>
+                    {promoMsg}
+                  </p>
+                )}
               </div>
             </motion.div>
 
@@ -310,6 +343,14 @@ const Cart = ({ savedPrices = {} }) => {
                         "$0"
                       : `$${cartData.deliveryFee.toFixed(1)}`}
                     </span>
+                    {discount > 0 && (
+                      <div
+                        className="cart-total-row"
+                        style={{ color: "green" }}>
+                        <span>Discount ({discount}%)</span>
+                        <span>-${discountAmount.toFixed(0)}</span>
+                      </div>
+                    )}
                   </div>
 
                   <AnimatePresence>
@@ -343,7 +384,7 @@ const Cart = ({ savedPrices = {} }) => {
                   <div className="cart-total-divider"></div>
                   <div className="cart-total-row cart-total-final">
                     <span>Total</span>
-                    <span>${cartData.total.toFixed(1)}</span>
+                    <span>${finalTotal.toFixed(1)}</span>{" "}
                   </div>
                 </div>
 
