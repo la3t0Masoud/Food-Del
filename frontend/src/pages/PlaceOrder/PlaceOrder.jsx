@@ -1,24 +1,43 @@
 import React, { useContext, useMemo, useState } from "react";
 import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
+
+// --- Discount code generator (simple, client-side for demo) ---
+const generateDiscountCode = (prefix) => {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code = prefix + "-";
+  for (let i = 0; i < 8; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return code;
+};
 
 const PlaceOrder = () => {
   const { getTotalCartAmount } = useContext(StoreContext);
+  const location = useLocation();
+  const charityOption = location.state?.charityOption ?? null;
+
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [discountCode, setDiscountCode] = useState(null);
 
   const orderSummary = useMemo(() => {
     const subtotal = getTotalCartAmount();
-    const deliveryFee = subtotal > 0 ? subtotal * 0.1 : 0;
-    const total = subtotal + deliveryFee;
-    return { subtotal, deliveryFee, total };
-  }, [getTotalCartAmount]);
+    const deliveryFee =
+      charityOption === "full" ? 0
+      : subtotal > 0 ? subtotal * 0.1
+      : 0;
+    const charityMatchAmount =
+      charityOption === "match" && subtotal > 0 ? subtotal : 0;
+    const total = subtotal + deliveryFee + charityMatchAmount;
+    return { subtotal, deliveryFee, charityMatchAmount, total };
+  }, [getTotalCartAmount, charityOption]);
 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, "");
-    if (value.length <= 10) {
-      setPhoneNumber(value);
-    }
+    if (value.length <= 10) setPhoneNumber(value);
   };
 
   const handleSubmit = (e) => {
@@ -27,9 +46,123 @@ const PlaceOrder = () => {
       alert("Phone number must be exactly 10 digits");
       return;
     }
-    // Handle payment logic here
+
+    // Generate discount code based on charity option
+    let code = null;
+    if (charityOption === "full") {
+      code = generateDiscountCode("GIVE20");
+    } else if (charityOption === "match") {
+      code = generateDiscountCode("CARE10");
+    }
+
+    setDiscountCode(code);
+    setOrderPlaced(true);
   };
 
+  // ---- Post-payment success screen ----
+  if (orderPlaced) {
+    return (
+      <div className="place-order-wrapper">
+        <motion.div
+          className="order-success"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}>
+          <div className="order-success-icon">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
+
+          <h2>Order Placed Successfully!</h2>
+
+          {charityOption === "full" && (
+            <p className="order-success-charity-msg">
+              🤲 Your entire order will be delivered to those in need. Thank you
+              for your generosity.
+            </p>
+          )}
+          {charityOption === "match" && (
+            <p className="order-success-charity-msg">
+              💛 We'll match your order and send the same food to someone in
+              need.
+            </p>
+          )}
+
+          {discountCode && (
+            <motion.div
+              className="order-discount-card"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}>
+              <div className="order-discount-card-header">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+                  />
+                </svg>
+                <span>Your Reward Discount Code</span>
+              </div>
+              <div className="order-discount-amount">
+                {charityOption === "full" ? "20%" : "10%"} OFF your next order
+              </div>
+              <div className="order-discount-code-box">
+                <span className="order-discount-code">{discountCode}</span>
+                <button
+                  type="button"
+                  className="order-discount-copy"
+                  onClick={() => navigator.clipboard.writeText(discountCode)}
+                  aria-label="Copy discount code">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor">
+                    <rect
+                      x="9"
+                      y="9"
+                      width="13"
+                      height="13"
+                      rx="2"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"
+                      strokeWidth="2"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <p className="order-discount-note">
+                Save this code — it won't be shown again.
+              </p>
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    );
+  }
+
+  // ---- Normal checkout form ----
   return (
     <div className="place-order-wrapper">
       <motion.form
@@ -85,7 +218,6 @@ const PlaceOrder = () => {
                 />
               </div>
             </div>
-
             <div className="input-group">
               <label htmlFor="email">Email Address</label>
               <input
@@ -96,7 +228,6 @@ const PlaceOrder = () => {
                 aria-required="true"
               />
             </div>
-
             <div className="input-group">
               <label htmlFor="street">Street Address</label>
               <input
@@ -107,7 +238,6 @@ const PlaceOrder = () => {
                 aria-required="true"
               />
             </div>
-
             <div className="multi-fields">
               <div className="input-group">
                 <label htmlFor="city">City</label>
@@ -130,7 +260,6 @@ const PlaceOrder = () => {
                 />
               </div>
             </div>
-
             <div className="input-group">
               <label htmlFor="phone">Phone Number</label>
               <div className="phone-input-wrapper">
@@ -185,15 +314,69 @@ const PlaceOrder = () => {
                 <span>${orderSummary.subtotal.toFixed(0)}</span>
               </div>
               <div className="order-summary-row">
-                <span>Delivery Fee (10%)</span>
-                <span>${orderSummary.deliveryFee.toFixed(1)}</span>
+                <span>
+                  {charityOption === "full" ?
+                    "Delivery Fee (waived 🎁)"
+                  : "Delivery Fee (10%)"}
+                </span>
+                <span
+                  className={
+                    charityOption === "full" ? "order-fee-waived" : ""
+                  }>
+                  {charityOption === "full" ?
+                    "$0"
+                  : `$${orderSummary.deliveryFee.toFixed(1)}`}
+                </span>
               </div>
+
+              {charityOption === "match" && (
+                <div className="order-summary-row order-charity-match-row">
+                  <span>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      style={{
+                        color: "var(--primary)",
+                        marginRight: "6px",
+                        verticalAlign: "middle",
+                      }}>
+                      <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                    Charity Match
+                  </span>
+                  <span>${orderSummary.charityMatchAmount.toFixed(0)}</span>
+                </div>
+              )}
+
               <div className="order-summary-divider"></div>
               <div className="order-summary-row order-summary-total">
                 <span>Total Amount</span>
                 <span>${orderSummary.total.toFixed(1)}</span>
               </div>
             </div>
+
+            {charityOption && (
+              <div className="order-charity-badge">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+                  />
+                </svg>
+                {charityOption === "full" ?
+                  "You'll receive a 20% discount code after payment"
+                : "You'll receive a 10% discount code after payment"}
+              </div>
+            )}
 
             <button type="submit" className="payment-button">
               <svg

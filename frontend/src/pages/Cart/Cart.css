@@ -632,3 +632,243 @@
     border: 1px solid var(--cart-border-strong);
   }
 }
+/* ========================================
+   Charity Section
+   ======================================== */
+.cart-charity {
+  background: var(--cart-surface);
+  padding: 28px 32px;
+  border-radius: 12px;
+  box-shadow: var(--cart-shadow-sm);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cart-charity::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px;
+  background: linear-gradient(135deg, #ff6b6b40, #ff6b6b10, #ff6b6b30);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.cart-charity-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.cart-charity-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--cart-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cart-charity-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cart-text-primary);
+  margin: 0 0 4px 0;
+}
+
+.cart-charity-header p {
+  font-size: 13px;
+  color: var(--cart-text-muted);
+  margin: 0;
+}
+
+.cart-charity-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-charity-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--cart-surface-alt);
+  border: 2px solid var(--cart-border);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s ease;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.cart-charity-option::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.06), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cart-charity-option:hover {
+  border-color: var(--cart-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--cart-accent-shadow);
+}
+
+.cart-charity-option:hover::after {
+  opacity: 1;
+}
+
+.cart-charity-option.active {
+  border-color: var(--cart-accent);
+  background: var(--cart-surface-alt);
+  box-shadow: 0 4px 16px var(--cart-accent-shadow);
+}
+
+.cart-charity-option.active::after {
+  opacity: 1;
+}
+
+.cart-charity-option-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--cart-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.25s ease;
+  background: transparent;
+}
+
+.cart-charity-option-check svg {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.cart-charity-option.active .cart-charity-option-check {
+  background: var(--cart-accent);
+  border-color: var(--cart-accent);
+}
+
+.cart-charity-option.active .cart-charity-option-check svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cart-charity-option-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cart-charity-option-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cart-text-primary);
+  line-height: 1.3;
+}
+
+.cart-charity-option-desc {
+  font-size: 12px;
+  color: var(--cart-text-muted);
+  line-height: 1.5;
+}
+
+.cart-charity-option-desc strong {
+  color: var(--cart-accent);
+}
+
+/* ========================================
+   Cart Summary — Charity States
+   ======================================== */
+.cart-fee-waived {
+  text-decoration: line-through;
+  color: var(--cart-text-muted) !important;
+  font-weight: 400 !important;
+}
+
+.cart-charity-match-row {
+  overflow: hidden;
+  color: var(--cart-accent) !important;
+}
+
+.cart-charity-match-row span:first-child {
+  color: var(--cart-accent) !important;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.cart-charity-match-row span:last-child {
+  color: var(--cart-accent) !important;
+}
+
+/* ========================================
+   Charity Reward Hint (below checkout btn)
+   ======================================== */
+.cart-charity-reward-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.08),
+    rgba(255, 107, 107, 0.04)
+  );
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--cart-accent);
+  font-weight: 500;
+  margin-top: 12px;
+}
+
+.cart-charity-reward-hint svg {
+  flex-shrink: 0;
+  stroke: var(--cart-accent);
+}
+
+/* ========================================
+   Responsive — Charity Section
+   ======================================== */
+@media (max-width: 768px) {
+  .cart-charity {
+    padding: 20px;
+  }
+
+  .cart-charity-option {
+    padding: 14px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-charity {
+    padding: 16px;
+  }
+
+  .cart-charity-option-title {
+    font-size: 13px;
+  }
+
+  .cart-charity-option-desc {
+    font-size: 11px;
+  }
+}

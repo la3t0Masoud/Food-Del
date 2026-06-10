@@ -1,15 +1,18 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Cart = ({ savedPrices = {} }) => {
   const { cartItems, food_list, removeFromCart, getTotalCartAmount } =
     useContext(StoreContext);
   const navigate = useNavigate();
+  const [charityOption, setCharityOption] = useState(null);
+  // null | 'full' | 'match'
 
   const getItemPrice = (item) => savedPrices?.[item._id] ?? item.price;
+
   const cartItemVariants = {
     rest: { scale: 1 },
     hover: {
@@ -18,6 +21,7 @@ const Cart = ({ savedPrices = {} }) => {
       transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
     },
   };
+
   const cartData = useMemo(() => {
     let subtotal = 0;
     let itemCount = 0;
@@ -34,13 +38,37 @@ const Cart = ({ savedPrices = {} }) => {
       }
     });
 
-    const deliveryFee = subtotal > 0 ? subtotal * 0.1 : 0;
-    const total = subtotal + deliveryFee;
+    // گزینه اول: delivery fee صفر میشه
+    // گزینه دوم: delivery fee معمولی + یه بار دیگه قیمت غذاها
+    const deliveryFee =
+      charityOption === "full" ? 0
+      : subtotal > 0 ? subtotal * 0.1
+      : 0;
 
-    return { items, subtotal, deliveryFee, total, itemCount };
-  }, [food_list, cartItems, savedPrices]);
+    const charityMatchAmount =
+      charityOption === "match" && subtotal > 0 ? subtotal : 0;
+
+    const total = subtotal + deliveryFee + charityMatchAmount;
+
+    return {
+      items,
+      subtotal,
+      deliveryFee,
+      charityMatchAmount,
+      total,
+      itemCount,
+    };
+  }, [food_list, cartItems, savedPrices, charityOption]);
 
   const isEmpty = cartData.items.length === 0;
+
+  const handleCharityToggle = (option) => {
+    setCharityOption((prev) => (prev === option ? null : option));
+  };
+
+  const handleCheckout = () => {
+    navigate("/order", { state: { charityOption } });
+  };
 
   return (
     <div className="cart">
@@ -88,17 +116,16 @@ const Cart = ({ savedPrices = {} }) => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.3 }}
-                  whileHover="hover" // ← این به همه فرزندان propagate میشه
+                  whileHover="hover"
                   whileTap="tap">
                   <div className="cart-item-image">
                     <motion.img
                       src={item.image}
                       alt={item.name}
                       loading="lazy"
-                      variants={cartItemVariants} // ← state رو از parent میگیره
+                      variants={cartItemVariants}
                     />
                   </div>
-
                   <div className="cart-item-title">
                     <h4>{item.name}</h4>
                     {item.description && (
@@ -146,6 +173,94 @@ const Cart = ({ savedPrices = {} }) => {
               initial={{ opacity: 0, y: 200 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}>
+              {/* Charity Section */}
+              <div className="cart-charity">
+                <div className="cart-charity-header">
+                  <svg
+                    className="cart-charity-icon"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.8}
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                  </svg>
+                  <div>
+                    <h3>Give Back</h3>
+                    <p>Support those in need with your order</p>
+                  </div>
+                </div>
+
+                <div className="cart-charity-options">
+                  <button
+                    type="button"
+                    className={`cart-charity-option ${charityOption === "full" ? "active" : ""}`}
+                    onClick={() => handleCharityToggle("full")}
+                    aria-pressed={charityOption === "full"}>
+                    <div className="cart-charity-option-check">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        stroke="currentColor">
+                        <path
+                          d="M2 7l4 4 6-6"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="cart-charity-option-content">
+                      <span className="cart-charity-option-title">
+                        Donate entire order
+                      </span>
+                      <span className="cart-charity-option-desc">
+                        All items go to those in need — no delivery fee charged
+                        + you get a <strong>20% discount</strong> on your next
+                        order
+                      </span>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`cart-charity-option ${charityOption === "match" ? "active" : ""}`}
+                    onClick={() => handleCharityToggle("match")}
+                    aria-pressed={charityOption === "match"}>
+                    <div className="cart-charity-option-check">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        stroke="currentColor">
+                        <path
+                          d="M2 7l4 4 6-6"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="cart-charity-option-content">
+                      <span className="cart-charity-option-title">
+                        Match my order for someone in need
+                      </span>
+                      <span className="cart-charity-option-desc">
+                        We duplicate your order for a person in need — you get a{" "}
+                        <strong>10% discount</strong> on your next order
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Promo Code */}
               <div className="cart-promocode">
                 <h3>Have a promo code?</h3>
                 <p>Enter your promo code here</p>
@@ -172,19 +287,61 @@ const Cart = ({ savedPrices = {} }) => {
                     <span>Subtotal</span>
                     <span>${cartData.subtotal.toFixed(0)}</span>
                   </div>
+
                   <div className="cart-total-row">
-                    <span>Delivery Fee (10%)</span>
-                    <span>${cartData.deliveryFee.toFixed(1)}</span>
+                    <span>
+                      {charityOption === "full" ?
+                        "Delivery Fee (waived 🎁)"
+                      : "Delivery Fee (10%)"}
+                    </span>
+                    <span
+                      className={
+                        charityOption === "full" ? "cart-fee-waived" : ""
+                      }>
+                      {charityOption === "full" ?
+                        "$0"
+                      : `$${cartData.deliveryFee.toFixed(1)}`}
+                    </span>
                   </div>
+
+                  <AnimatePresence>
+                    {charityOption === "match" && (
+                      <motion.div
+                        className="cart-total-row cart-charity-match-row"
+                        initial={{ opacity: 0, height: 0, y: -10 }}
+                        animate={{ opacity: 1, height: "auto", y: 0 }}
+                        exit={{ opacity: 0, height: 0, y: -10 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}>
+                        <span>
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            style={{
+                              color: "#ff6b6b",
+                              marginRight: "6px",
+                              verticalAlign: "middle",
+                            }}>
+                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                          </svg>
+                          Charity Match
+                        </span>
+                        <span>${cartData.charityMatchAmount.toFixed(0)}</span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
                   <div className="cart-total-divider"></div>
                   <div className="cart-total-row cart-total-final">
                     <span>Total</span>
                     <span>${cartData.total.toFixed(1)}</span>
                   </div>
                 </div>
+
                 <button
                   className="cart-checkout-button"
-                  onClick={() => navigate("/order")}>
+                  onClick={handleCheckout}>
                   Proceed to Checkout
                   <svg
                     width="20"
@@ -200,6 +357,36 @@ const Cart = ({ savedPrices = {} }) => {
                     />
                   </svg>
                 </button>
+
+                <AnimatePresence>
+                  {charityOption && (
+                    <motion.div
+                      className="cart-charity-reward-hint"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.3 }}>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"
+                        />
+                      </svg>
+                      <span>
+                        {charityOption === "full" ?
+                          "You'll receive a 20% discount code after payment"
+                        : "You'll receive a 10% discount code after payment"}
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           </div>
@@ -209,5 +396,4 @@ const Cart = ({ savedPrices = {} }) => {
   );
 };
 
-//
 export default Cart;
