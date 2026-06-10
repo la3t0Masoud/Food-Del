@@ -15,25 +15,24 @@ const generateDiscountCode = (prefix) => {
 };
 
 const PlaceOrder = () => {
-  const { getTotalCartAmount } = useContext(StoreContext);
+  // const { getTotalCartAmount } = useContext(StoreContext);
   const location = useLocation();
-  const charityOption = location.state?.charityOption ?? null;
+
+  const {
+    charityOption,
+    subtotal = 0,
+    deliveryFee = 0,
+    charityMatchAmount = 0,
+    total = 0,
+  } = location.state ?? {};
+
+  // const charityOption = location.state?.charityOption ?? null;
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [discountCode, setDiscountCode] = useState(null);
 
-  const orderSummary = useMemo(() => {
-    const subtotal = getTotalCartAmount();
-    const deliveryFee =
-      charityOption === "full" ? 0
-      : subtotal > 0 ? subtotal * 0.1
-      : 0;
-    const charityMatchAmount =
-      charityOption === "match" && subtotal > 0 ? subtotal : 0;
-    const total = subtotal + deliveryFee + charityMatchAmount;
-    return { subtotal, deliveryFee, charityMatchAmount, total };
-  }, [getTotalCartAmount, charityOption]);
+  const orderSummary = { subtotal, deliveryFee, charityMatchAmount, total };
 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, "");

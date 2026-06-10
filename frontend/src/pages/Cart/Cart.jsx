@@ -67,7 +67,15 @@ const Cart = ({ savedPrices = {} }) => {
   };
 
   const handleCheckout = () => {
-    navigate("/order", { state: { charityOption } });
+    navigate("/order", {
+      state: {
+        charityOption,
+        subtotal: cartData.subtotal,
+        deliveryFee: cartData.deliveryFee,
+        charityMatchAmount: cartData.charityMatchAmount,
+        total: cartData.total,
+      },
+    });
   };
 
   return (
