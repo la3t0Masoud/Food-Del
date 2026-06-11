@@ -4,6 +4,7 @@ import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import LoginPopup from "../LoginPopup/LoginPopup";
 import { motion } from "framer-motion";
+import MarqueeText from "../MarqueeText/MarqueeText";
 
 const FoodItem = ({
   id,
@@ -68,10 +69,10 @@ const FoodItem = ({
           </div>
           <div className="food-item-info">
             <div className="food-item-name-rating">
-              <p>{name}</p>
+              <MarqueeText text={name} className="food-item-name-rating-text" />
               <img className="RateImg" src={assets.rating_starts} alt="" />
             </div>
-            <p className="food-item-des">{description}</p>
+            <MarqueeText text={description} className="food-item-des" />
             <div className="DivButtoms">
               <p className="food-item-price">${price}</p>
               {HaveDetails && (

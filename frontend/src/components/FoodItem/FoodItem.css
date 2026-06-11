@@ -134,3 +134,31 @@
 .RateImg {
   margin-top: -50px;
 }
+/* .marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.marquee-text {
+  display: inline-block;
+}
+
+.marquee-animate {
+  animation: marquee-scroll 8s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+} */
+.food-item-name-rating-text {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+  max-width: calc(100% - 80px); /* فضا برای عکس رتبه‌بندی */
+}
