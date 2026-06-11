@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import {
   generateUniqueCode,
   saveDiscountCode,
+  redeemCode,
 } from "../../utils/discountManager";
 
 const PlaceOrder = () => {
@@ -23,6 +24,7 @@ const PlaceOrder = () => {
     discount = 0,
     discountAmount = 0,
     finalTotal = 0,
+    appliedPromoCode = null, // ← اضافه شد
   } = location.state ?? {};
 
   // const charityOption = location.state?.charityOption ?? null;
@@ -45,7 +47,11 @@ const PlaceOrder = () => {
       return;
     }
 
-    // Generate discount code based on charity option
+    // ← اینجا کد تخفیف مصرف‌شده رو پاک کن
+    if (appliedPromoCode) {
+      redeemCode(appliedPromoCode);
+    }
+
     let code = null;
     if (charityOption === "full") {
       code = generateUniqueCode("GIVE20");
@@ -350,10 +356,17 @@ const PlaceOrder = () => {
                 </div>
               )}
 
+              {discount > 0 && (
+                <div className="order-summary-row" style={{ color: "green" }}>
+                  <span>Discount ({discount}%)</span>
+                  <span>-${discountAmount.toFixed(2)}</span>
+                </div>
+              )}
+
               <div className="order-summary-divider"></div>
               <div className="order-summary-row order-summary-total">
                 <span>Total Amount</span>
-                <span>${orderSummary.total.toFixed(1)}</span>
+                <span>${finalTotal.toFixed(2)}</span>
               </div>
             </div>
 

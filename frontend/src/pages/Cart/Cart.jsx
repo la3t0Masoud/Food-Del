@@ -16,7 +16,7 @@ const Cart = ({ savedPrices = {} }) => {
     const percent = validateCode(promoCode.trim().toUpperCase());
     if (percent !== null) {
       setDiscount(percent);
-      redeemCode(promoCode.trim().toUpperCase());
+      // ← redeemCode رو از اینجا حذف کن
       setPromoMsg(`✅ ${percent}% discount applied!`);
     } else {
       setPromoMsg("❌ Invalid or already used code.");
@@ -99,7 +99,9 @@ const Cart = ({ savedPrices = {} }) => {
         charityMatchAmount: cartData.charityMatchAmount,
         total: cartData.total,
         discount,
+        discountAmount,
         finalTotal,
+        appliedPromoCode: promoCode.trim().toUpperCase() || null, // ← اضافه شد
       },
     });
   };

@@ -1,6 +1,5 @@
 const STORAGE_KEY = "discount_codes";
 
-// بارگذاری کدها از localStorage
 const loadCodes = () => {
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
@@ -29,21 +28,18 @@ export const generateUniqueCode = (prefix) => {
   return code;
 };
 
-// ذخیره کد جدید
 export const saveDiscountCode = (code, discountPercent) => {
   const codes = loadCodes();
   codes.push({ code, discountPercent, used: false });
   saveCodes(codes);
 };
 
-// اعتبارسنجی و گرفتن درصد تخفیف (null اگر نامعتبر/استفاده شده)
 export const validateCode = (code) => {
   const codes = loadCodes();
   const entry = codes.find((c) => c.code === code && !c.used);
   return entry ? entry.discountPercent : null;
 };
 
-// علامت‌گذاری کد به‌عنوان استفاده‌شده (حذف از لیست)
 export const redeemCode = (code) => {
   const codes = loadCodes().filter((c) => c.code !== code);
   saveCodes(codes);
