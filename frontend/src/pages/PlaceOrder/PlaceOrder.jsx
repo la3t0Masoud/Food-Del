@@ -20,6 +20,9 @@ const PlaceOrder = () => {
     deliveryFee = 0,
     charityMatchAmount = 0,
     total = 0,
+    discount = 0,
+    discountAmount = 0,
+    finalTotal = 0,
   } = location.state ?? {};
 
   // const charityOption = location.state?.charityOption ?? null;

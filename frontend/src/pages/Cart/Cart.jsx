@@ -98,6 +98,8 @@ const Cart = ({ savedPrices = {} }) => {
         deliveryFee: cartData.deliveryFee,
         charityMatchAmount: cartData.charityMatchAmount,
         total: cartData.total,
+        discount,
+        finalTotal,
       },
     });
   };
@@ -344,12 +346,7 @@ const Cart = ({ savedPrices = {} }) => {
                       : `$${cartData.deliveryFee.toFixed(1)}`}
                     </span>
                   </div>
-                  {discount > 0 && (
-                    <div className="cart-total-row" style={{ color: "green" }}>
-                      <span>Discount ({discount}%)</span>
-                      <span>-${discountAmount.toFixed(2)}</span>
-                    </div>
-                  )}
+
                   <AnimatePresence>
                     {charityOption === "match" && (
                       <motion.div
@@ -377,7 +374,12 @@ const Cart = ({ savedPrices = {} }) => {
                       </motion.div>
                     )}
                   </AnimatePresence>
-
+                  {discount > 0 && (
+                    <div className="cart-total-row" style={{ color: "green" }}>
+                      <span>Discount ({discount}%)</span>
+                      <span>-${discountAmount.toFixed(2)}</span>
+                    </div>
+                  )}
                   <div className="cart-total-divider"></div>
                   <div className="cart-total-row cart-total-final">
                     <span>Total</span>
