@@ -103,7 +103,7 @@ const PlaceOrder = () => {
         ["fullName", "email"]
       : ["fullName", "email", "street", "city", "state"];
     if (!isLoggedIn) {
-      const guestFields = ["fullName", "email", "street", "city", "state"];
+      // const guestFields = ["fullName", "email", "street", "city", "state"];
       const firstError = guestFields.find(
         (f) => validators[f]?.(formData[f]) !== null,
       );
