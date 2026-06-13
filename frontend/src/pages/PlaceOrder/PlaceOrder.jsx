@@ -98,7 +98,10 @@ const PlaceOrder = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const guestFields =
+      charityOption === "full" ?
+        ["fullName", "email"]
+      : ["fullName", "email", "street", "city", "state"];
     if (!isLoggedIn) {
       const guestFields = ["fullName", "email", "street", "city", "state"];
       const firstError = guestFields.find(
@@ -345,58 +348,62 @@ const PlaceOrder = () => {
             </div>
 
             {/* Street */}
-            <div className="input-group">
-              <label htmlFor="street">Street Address</label>
-              <input
-                type="text"
-                id="street"
-                className={inputClass("street")}
-                value={
-                  isLoggedIn ?
-                    formData.street || currentUser.street || ""
-                  : formData.street
-                }
-                onChange={handleFieldChange}
-                placeholder="street address ..."
-                required
-              />
-            </div>
+            {charityOption !== "full" && (
+              <div className="input-group">
+                <label htmlFor="street">Street Address</label>
+                <input
+                  type="text"
+                  id="street"
+                  className={inputClass("street")}
+                  value={
+                    isLoggedIn ?
+                      formData.street || currentUser.street || ""
+                    : formData.street
+                  }
+                  onChange={handleFieldChange}
+                  placeholder="street address ..."
+                  required
+                />
+              </div>
+            )}
 
             {/* City + State */}
-            <div className="multi-fields">
-              <div className="input-group">
-                <label htmlFor="city">City</label>
-                <input
-                  type="text"
-                  id="city"
-                  className={inputClass("city")}
-                  value={
-                    isLoggedIn ?
-                      formData.city || currentUser.city || ""
-                    : formData.city
-                  }
-                  onChange={handleFieldChange}
-                  placeholder="City"
-                  required
-                />
+            {charityOption !== "full" && (
+              <div className="multi-fields">
+                <div className="input-group">
+                  <label htmlFor="city">City</label>
+                  <input
+                    type="text"
+                    id="city"
+                    className={inputClass("city")}
+                    value={
+                      isLoggedIn ?
+                        formData.city || currentUser.city || ""
+                      : formData.city
+                    }
+                    onChange={handleFieldChange}
+                    placeholder="City"
+                    required
+                  />
+                </div>
+                <div className="input-group">
+                  <label htmlFor="state">State</label>
+                  <input
+                    type="text"
+                    id="state"
+                    className={inputClass("state")}
+                    value={
+                      isLoggedIn ?
+                        formData.state || currentUser.state || ""
+                      : formData.state
+                    }
+                    onChange={handleFieldChange}
+                    placeholder="State"
+                    required
+                  />
+                </div>
               </div>
-              <div className="input-group">
-                <label htmlFor="state">State</label>
-                <input
-                  type="text"
-                  id="state"
-                  className={inputClass("state")}
-                  value={
-                    isLoggedIn ?
-                      formData.state || currentUser.state || ""
-                    : formData.state
-                  }
-                  onChange={handleFieldChange}
-                  placeholder="State"
-                  required
-                />
-              </div>
-            </div>
+            )}
 
             {/* Phone */}
             <div className="input-group">
