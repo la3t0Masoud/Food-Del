@@ -50,10 +50,10 @@ import food_33 from "./food_33.jpg";
 import food_34 from "./food_34.jpg";
 import food_35 from "./food_35.jpg";
 import food_36 from "./food_36.jpg";
-import OptionalPizza from "./OptionalPizza.png";
-import OptionalRolls from "./OptionalRolls.png";
-import OptionalSalad from "./OptionalSalad.png";
-import OptionalSandwich from "./OptionalSandwich.png";
+import OptionalPizza from "./OptionalPizza.jpg";
+import OptionalRolls from "./OptionalRolls.jpg";
+import OptionalSalad from "./OptionalSalad.jpg";
+import OptionalSandwich from "./OptionalSandwich.jpg";
 
 import add_icon_white from "./add_icon_white.png";
 import add_icon_green from "./add_icon_green.png";
