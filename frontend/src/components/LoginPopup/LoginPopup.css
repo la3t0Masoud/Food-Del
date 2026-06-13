@@ -434,3 +434,67 @@
     font-size: 10px;
   }
 }
+/* ========================================
+   Phone Input — LoginPopup
+   ======================================== */
+.login-phone-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.login-phone-wrapper:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.login-phone-prefix {
+  padding: 12px 10px 12px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border-right: 1.5px solid var(--border);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.login-phone-input {
+  /* border و border-radius رو override میکنیم چون wrapper داره */
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  flex: 1;
+  min-width: 0;
+}
+
+.login-phone-input:focus {
+  outline: none;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+.login-phone-error {
+  font-size: 12px;
+  color: #e53935;
+  margin-top: 5px;
+  display: block;
+  font-weight: 500;
+}
+/* ========================================
+   Input Validation States
+   ======================================== */
+.login-input--error {
+  border-color: #e53935 !important;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15) !important;
+}
+
+.login-input--valid {
+  border-color: #43a047 !important;
+  box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.15) !important;
+}

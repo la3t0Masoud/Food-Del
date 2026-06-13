@@ -4,6 +4,8 @@ import { StoreContext } from "../../context/StoreContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+
+import { toast } from "react-toastify";
 // --- Discount code generator (simple, client-side for demo) ---
 import {
   generateUniqueCode,
@@ -35,6 +37,59 @@ const PlaceOrder = () => {
   const { currentUser } = useAuth();
   const isLoggedIn = !!currentUser;
   const orderSummary = { subtotal, deliveryFee, charityMatchAmount, total };
+  const validators = {
+    fullName: (v) => {
+      if (!v.trim()) return "Full name is required."; // ← اضافه کن
+      if (/^[^a-zA-Z]/.test(v)) return "Name must start with a letter.";
+      if (/[^a-zA-Z\s]/.test(v))
+        return "Name can only contain letters and spaces.";
+      if (v.trim().length < 3) return "Name must be at least 3 characters.";
+      if (v.trim().length > 14) return "Name must be at most 14 characters.";
+      return null;
+    },
+    email: (v) => {
+      if (!v.trim()) return "Email is required."; // ← اضافه کن
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))
+        return "Please enter a valid email address.";
+      return null;
+    },
+    street: (v) => {
+      if (!v.trim()) return "Street address is required."; // ← اضافه کن
+      if (v.trim().length < 5)
+        return "Street address must be at least 5 characters.";
+      return null;
+    },
+    city: (v) => {
+      if (!v.trim()) return "City is required."; // ← اضافه کن
+      if (/[^a-zA-Z\s]/.test(v))
+        return "City can only contain letters and spaces.";
+      if (v.trim().length < 2) return "City must be at least 2 characters.";
+      return null;
+    },
+    state: (v) => {
+      if (!v.trim()) return "State is required."; // ← اضافه کن
+      if (/[^a-zA-Z\s]/.test(v))
+        return "State can only contain letters and spaces.";
+      if (v.trim().length < 2) return "State must be at least 2 characters.";
+      return null;
+    },
+    phone: (v) => {
+      if (!v.trim()) return "Phone number is required.";
+      if (v.length !== 10)
+        return `Phone number must be exactly 10 digits (${v.length}/10).`;
+      return null;
+    },
+  };
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    street: currentUser?.street ?? "", // ← مقدار اولیه از user
+    city: currentUser?.city ?? "",
+    state: currentUser?.state ?? "",
+  });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   const handlePhoneChange = (e) => {
     const value = e.target.value.replace(/\D/g, "");
@@ -43,10 +98,30 @@ const PlaceOrder = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (phoneNumber.length !== 10) {
-      alert("Phone number must be exactly 10 digits");
-      return;
+
+    if (!isLoggedIn) {
+      const guestFields = ["fullName", "email", "street", "city", "state"];
+      const firstError = guestFields.find(
+        (f) => validators[f]?.(formData[f]) !== null,
+      );
+      if (firstError) {
+        const err = validators[firstError](formData[firstError]);
+        setTouched((prev) => ({ ...prev, [firstError]: true }));
+        setFieldErrors((prev) => ({ ...prev, [firstError]: err }));
+        toast.error(err, { toastId: "field-error" }); // ← این رو اضافه کن
+        document.querySelector(`#${firstError}`)?.focus();
+        return;
+      }
+      if (phoneNumber.length !== 10) {
+        toast.error(
+          `Phone number must be exactly 10 digits (${phoneNumber.length}/10)`,
+          { toastId: "phone-error" },
+        );
+        return;
+      }
     }
+
+    // ... بقیه کد handleSubmit دست نمیخوره ...
 
     // ← اینجا کد تخفیف مصرف‌شده رو پاک کن
     if (appliedPromoCode) {
@@ -65,7 +140,18 @@ const PlaceOrder = () => {
     setDiscountCode(code);
     setOrderPlaced(true);
   };
+  const handleFieldChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+    setTouched((prev) => ({ ...prev, [id]: true }));
+    const err = validators[id]?.(value) ?? null;
+    setFieldErrors((prev) => ({ ...prev, [id]: err }));
+  };
 
+  const inputClass = (field) => {
+    if (!touched[field]) return "";
+    return fieldErrors[field] ? "input--error" : "input--valid";
+  };
   // ---- Post-payment success screen ----
   if (orderPlaced) {
     return (
@@ -175,6 +261,7 @@ const PlaceOrder = () => {
       <motion.form
         className="place-order"
         onSubmit={handleSubmit}
+        noValidate
         initial={{ opacity: 0, y: 200 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}>
@@ -203,104 +290,94 @@ const PlaceOrder = () => {
           </div>
 
           <div className="form-section">
-            <div className="multi-fields">
-              <div className="input-group">
-                <label htmlFor="firstName">First Name</label>
+            {/* Full Name */}
+            <div className="input-group">
+              <label htmlFor="fullName">Full Name</label>
+              {isLoggedIn ?
                 <input
                   type="text"
-                  id="firstName"
-                  defaultValue={
-                    isLoggedIn ? (currentUser.name?.split(" ")[0] ?? "") : ""
-                  }
-                  readOnly={isLoggedIn}
-                  style={
-                    isLoggedIn ?
-                      {
-                        background: "var(--color-background-secondary)",
-                        cursor: "not-allowed",
-                      }
-                    : {}
-                  }
+                  id="fullName"
+                  defaultValue={currentUser.name ?? ""}
+                  readOnly
+                  style={{
+                    background: "var(--color-background-secondary)",
+                    cursor: "not-allowed",
+                  }}
                   required
                 />
-              </div>
-              <div className="input-group">
-                <label htmlFor="lastName">Last Name</label>
-                <input
+              : <input
                   type="text"
-                  id="lastName"
-                  defaultValue={
-                    isLoggedIn ? (currentUser.name?.split(" ")[1] ?? "") : ""
-                  }
-                  readOnly={isLoggedIn}
-                  style={
-                    isLoggedIn ?
-                      {
-                        background: "var(--color-background-secondary)",
-                        cursor: "not-allowed",
-                      }
-                    : {}
-                  }
+                  id="fullName"
+                  className={inputClass("fullName")}
+                  value={formData.fullName}
+                  onChange={handleFieldChange}
+                  placeholder="your full name ..."
                   required
                 />
-              </div>
+              }
             </div>
+
+            {/* Email */}
             <div className="input-group">
               <label htmlFor="email">Email Address</label>
-              <input
-                type="email"
-                id="email"
-                defaultValue={isLoggedIn ? currentUser.email : ""}
-                readOnly={isLoggedIn}
-                style={
-                  isLoggedIn ?
-                    {
-                      background: "var(--color-background-secondary)",
-                      cursor: "not-allowed",
-                    }
-                  : {}
-                }
-                required
-              />
+              {isLoggedIn ?
+                <input
+                  type="email"
+                  id="email"
+                  defaultValue={currentUser.email}
+                  readOnly
+                  style={{
+                    background: "var(--color-background-secondary)",
+                    cursor: "not-allowed",
+                  }}
+                  required
+                />
+              : <input
+                  type="email"
+                  id="email"
+                  className={inputClass("email")}
+                  value={formData.email}
+                  onChange={handleFieldChange}
+                  placeholder="your email ..."
+                  required
+                />
+              }
             </div>
+
+            {/* Street */}
             <div className="input-group">
               <label htmlFor="street">Street Address</label>
               <input
                 type="text"
                 id="street"
-                defaultValue={isLoggedIn ? (currentUser.street ?? "") : ""}
-                readOnly={isLoggedIn}
-                style={
+                className={inputClass("street")}
+                value={
                   isLoggedIn ?
-                    {
-                      background: "var(--color-background-secondary)",
-                      cursor: "not-allowed",
-                    }
-                  : {}
+                    formData.street || currentUser.street || ""
+                  : formData.street
                 }
+                onChange={handleFieldChange}
+                placeholder="street address ..."
                 required
-                aria-required="true"
               />
             </div>
 
+            {/* City + State */}
             <div className="multi-fields">
               <div className="input-group">
                 <label htmlFor="city">City</label>
                 <input
                   type="text"
                   id="city"
-                  defaultValue={isLoggedIn ? (currentUser.city ?? "") : ""}
-                  readOnly={isLoggedIn}
-                  style={
+                  className={inputClass("city")}
+                  value={
                     isLoggedIn ?
-                      {
-                        background: "var(--color-background-secondary)",
-                        cursor: "not-allowed",
-                      }
-                    : {}
+                      formData.city || currentUser.city || ""
+                    : formData.city
                   }
+                  onChange={handleFieldChange}
+                  placeholder="City"
                   required
-                  aria-required="true"
                 />
               </div>
               <div className="input-group">
@@ -308,7 +385,41 @@ const PlaceOrder = () => {
                 <input
                   type="text"
                   id="state"
-                  defaultValue={isLoggedIn ? (currentUser.state ?? "") : ""}
+                  className={inputClass("state")}
+                  value={
+                    isLoggedIn ?
+                      formData.state || currentUser.state || ""
+                    : formData.state
+                  }
+                  onChange={handleFieldChange}
+                  placeholder="State"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div className="input-group">
+              <label htmlFor="phone">Phone Number</label>
+              <div
+                className={`phone-input-wrapper ${
+                  !isLoggedIn && touched.phone ?
+                    fieldErrors.phone ?
+                      "input--error"
+                    : "input--valid"
+                  : ""
+                }`}>
+                <span className="phone-prefix">+98</span>
+                <input
+                  type="tel"
+                  id="phone"
+                  className="phone-input"
+                  value={
+                    isLoggedIn ?
+                      (currentUser.phone ?? phoneNumber)
+                    : phoneNumber
+                  }
+                  onChange={isLoggedIn ? undefined : handlePhoneChange}
                   readOnly={isLoggedIn}
                   style={
                     isLoggedIn ?
@@ -319,32 +430,16 @@ const PlaceOrder = () => {
                     : {}
                   }
                   required
-                  aria-required="true"
-                />
-              </div>
-            </div>
-            <div className="input-group">
-              <label htmlFor="phone">Phone Number</label>
-              <div className="phone-input-wrapper">
-                <span className="phone-prefix">+98</span>
-                <input
-                  type="tel"
-                  id="phone"
-                  className="phone-input"
-                  placeholder=""
-                  value={phoneNumber}
-                  onChange={handlePhoneChange}
-                  required
-                  aria-required="true"
                   pattern="[0-9]{10}"
-                  title="Phone number must be exactly 10 digits"
                 />
               </div>
-              {phoneNumber.length > 0 && phoneNumber.length !== 10 && (
-                <span className="phone-error">
-                  Phone number must be 10 digits ({phoneNumber.length}/10)
-                </span>
-              )}
+              {!isLoggedIn &&
+                phoneNumber.length > 0 &&
+                phoneNumber.length !== 10 && (
+                  <span className="phone-error">
+                    Phone number must be 10 digits ({phoneNumber.length}/10)
+                  </span>
+                )}
             </div>
           </div>
         </div>

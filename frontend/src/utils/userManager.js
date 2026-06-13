@@ -5,7 +5,6 @@ export const getUsers = () => {
   return raw ? JSON.parse(raw) : [];
 };
 
-// ← street, city, state اضافه شد
 export const registerUser = (
   name,
   email,
@@ -13,13 +12,17 @@ export const registerUser = (
   street = "",
   city = "",
   state = "",
+  phone = "",
 ) => {
   const users = getUsers();
-  const exists = users.find((u) => u.email === email);
-  if (exists)
+
+  if (users.find((u) => u.email === email))
     return { success: false, message: "این ایمیل قبلاً ثبت شده است." };
 
-  const newUser = { name, email, password, street, city, state };
+  if (users.find((u) => u.phone === phone))
+    return { success: false, message: "این شماره تلفن قبلاً ثبت شده است." };
+
+  const newUser = { name, email, password, street, city, state, phone };
   users.push(newUser);
   localStorage.setItem(USERS_KEY, JSON.stringify(users));
   return { success: true, user: newUser };
