@@ -43,26 +43,48 @@ const FoodItem = ({
           <div className="food-item-img-container">
             <img className="food-item-image" src={image} alt="" />
             {!cartItems[id] ?
-              <img
-                className="add"
+              <button
+                className="add-btn-custom"
                 onClick={() => addToCart(id)}
-                src={assets.add_icon_white}
-                alt=""
-              />
+                aria-label="Add to cart">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </button>
             : <div className="food-item-counter">
-                <img
-                  className="Cimg"
+                <button
+                  className="Cimg counter-action minus"
                   onClick={() => removeFromCart(id)}
-                  src={assets.remove_icon_red}
-                  alt=""
-                />
+                  aria-label="Remove one">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                </button>
+                <span className="counter-divider" />
                 <p>{cartItems[id]}</p>
-                <img
-                  className="Cimg"
+                <span className="counter-divider" />
+                <button
+                  className="Cimg counter-action plus"
                   onClick={() => addToCart(id)}
-                  src={assets.add_icon_green}
-                  alt=""
-                />
+                  aria-label="Add one more">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                </button>
               </div>
             }
           </div>
