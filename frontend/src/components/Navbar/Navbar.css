@@ -9,8 +9,12 @@
   background: var(--bg);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 8px var(--shadow-sm);
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 100;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
 }
 
 /* ========================================
@@ -538,21 +542,8 @@
    ======================================== */
 @media (min-width: 1400px) {
   .navbar {
-    padding: 20px 80px;
-  }
-
-  .navbar-menu {
-    gap: 56px;
-  }
-
-  .navbar-menu-item {
-    font-size: 17px;
-  }
-}
-
-@media (min-width: 1200px) and (max-width: 1399px) {
-  .navbar {
-    padding: 20px 60px;
+    padding: 0 80px;
+    height: 113px;
   }
 
   .navbar-menu {
@@ -569,57 +560,51 @@
    ======================================== */
 @media (min-width: 992px) and (max-width: 1199px) {
   .navbar {
-    padding: 20px 40px;
+    padding: 0 32px;
+    height: 113px;
   }
 
   .navbar-menu {
-    gap: 32px;
+    gap: 24px;
   }
 
   .navbar-menu-item {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .navbar-right {
-    gap: 20px;
+    gap: 6px;
   }
 
   .navbar-signin-btn {
-    padding: 9px 20px;
-    font-size: 14px;
+    padding: 7px 14px;
+    font-size: 13px;
   }
 }
 
 /* ========================================
    Responsive Design - Tablet
    ======================================== */
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px) and (max-width: 992px) {
   .navbar {
-    padding: 16px 32px;
+    padding: 0 28px;
+    height: 113px;
   }
 
-  .navbar-logo-img {
-    width: 56px;
-    height: 56px;
-  }
-
-  /* منوی لینک‌ها توی تبلت مخفی میشه */
   .navbar-menu {
     display: none;
   }
 
-  .navbar-right {
-    gap: 16px;
-  }
-
-  /* دکمه‌های desktop-only توی تبلت هم مخفی میشن */
   .navbar-desktop-only {
     display: none !important;
   }
 
-  /* همبرگر توی تبلت نشون داده میشه */
   .navbar-hamburger {
     display: flex;
+  }
+
+  .navbar-right {
+    gap: 8px;
   }
 }
 
