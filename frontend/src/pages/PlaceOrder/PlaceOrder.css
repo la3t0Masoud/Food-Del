@@ -355,11 +355,13 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 885px) {
   .place-order-wrapper {
     padding: 60px 0 80px;
   }
   .place-order {
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     gap: 32px;
   }
