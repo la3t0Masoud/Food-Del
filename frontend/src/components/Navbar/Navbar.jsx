@@ -5,7 +5,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { StoreContext } from "../../context/StoreContext";
 import { useTheme } from "../../context/ThemeContext/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
-
+// اضافه کن به import ها
+import { useAuth } from "../../context/AuthContext";
 const Navbar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -13,7 +14,8 @@ const Navbar = ({ setShowLogin }) => {
   const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { currentUser, logout } = useAuth();
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const menuItems = [
     { id: "home", label: "Home", to: "/", type: "link" },
     { id: "menu", label: "Menu", href: "#explore-menu", type: "anchor" },
@@ -203,24 +205,107 @@ const Navbar = ({ setShowLogin }) => {
           </Link>
 
           {/* Sign In — desktop only */}
-          <button
-            onClick={() => setShowLogin(true)}
-            className="navbar-signin-btn navbar-desktop-only"
-            aria-label="Sign in to your account">
-            <svg
-              className="navbar-signin-icon"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-            Sign In
-          </button>
+          {/* Sign In / User Menu — desktop only */}
+          {currentUser ?
+            <div className="navbar-user-menu-wrapper navbar-desktop-only">
+              <button
+                className="navbar-user-btn"
+                onClick={() => setShowUserMenu((p) => !p)}
+                aria-label="User menu">
+                <div className="navbar-user-avatar">
+                  {currentUser.name?.charAt(0).toUpperCase() ?? "U"}
+                </div>
+                <span className="navbar-user-name">
+                  {currentUser.name?.split(" ")[0]}
+                </span>
+                <svg
+                  className={`navbar-user-chevron ${showUserMenu ? "open" : ""}`}
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+              <AnimatePresence>
+                {showUserMenu && (
+                  <>
+                    <div
+                      className="navbar-user-dropdown-overlay"
+                      onClick={() => setShowUserMenu(false)}
+                    />
+                    <motion.div
+                      className="navbar-user-dropdown"
+                      initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                      transition={{ duration: 0.18, ease: "easeOut" }}>
+                      <div className="navbar-user-dropdown-header">
+                        <div className="navbar-user-avatar-lg">
+                          {currentUser.name?.charAt(0).toUpperCase() ?? "U"}
+                        </div>
+                        <div>
+                          <p className="navbar-user-dropdown-name">
+                            {currentUser.name}
+                          </p>
+                          <p className="navbar-user-dropdown-email">
+                            {currentUser.email}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="navbar-user-dropdown-divider" />
+                      <button
+                        className="navbar-user-dropdown-item navbar-user-logout"
+                        onClick={() => {
+                          logout();
+                          setShowUserMenu(false);
+                        }}>
+                        <svg
+                          width="16"
+                          height="16"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                          />
+                        </svg>
+                        Sign Out
+                      </button>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+            </div>
+          : <button
+              onClick={() => setShowLogin(true)}
+              className="navbar-signin-btn navbar-desktop-only"
+              aria-label="Sign in to your account">
+              <svg
+                className="navbar-signin-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+              Sign In
+            </button>
+          }
 
           {/* Hamburger — mobile/tablet only */}
           <button
@@ -415,26 +500,48 @@ const Navbar = ({ setShowLogin }) => {
                   }
                 </button>
 
-                <button
-                  onClick={() => {
-                    setShowLogin(true);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="mobile-signin-btn">
-                  <svg
-                    className="mobile-signin-icon"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                  Sign In
-                </button>
+                {currentUser ?
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="mobile-signin-btn mobile-logout-btn">
+                    <svg
+                      className="mobile-signin-icon"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                      />
+                    </svg>
+                    Sign Out ({currentUser.name?.split(" ")[0]})
+                  </button>
+                : <button
+                    onClick={() => {
+                      setShowLogin(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="mobile-signin-btn">
+                    <svg
+                      className="mobile-signin-icon"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                    Sign In
+                  </button>
+                }
               </motion.div>
             </motion.div>
           </>

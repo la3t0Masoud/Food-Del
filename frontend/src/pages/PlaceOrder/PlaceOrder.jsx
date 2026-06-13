@@ -3,7 +3,7 @@ import "./PlaceOrder.css";
 import { StoreContext } from "../../context/StoreContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
-
+import { useAuth } from "../../context/AuthContext";
 // --- Discount code generator (simple, client-side for demo) ---
 import {
   generateUniqueCode,
@@ -32,7 +32,8 @@ const PlaceOrder = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [discountCode, setDiscountCode] = useState(null);
-
+  const { currentUser } = useAuth();
+  const isLoggedIn = !!currentUser;
   const orderSummary = { subtotal, deliveryFee, charityMatchAmount, total };
 
   const handlePhoneChange = (e) => {
@@ -208,9 +209,19 @@ const PlaceOrder = () => {
                 <input
                   type="text"
                   id="firstName"
-                  placeholder=""
+                  defaultValue={
+                    isLoggedIn ? (currentUser.name?.split(" ")[0] ?? "") : ""
+                  }
+                  readOnly={isLoggedIn}
+                  style={
+                    isLoggedIn ?
+                      {
+                        background: "var(--color-background-secondary)",
+                        cursor: "not-allowed",
+                      }
+                    : {}
+                  }
                   required
-                  aria-required="true"
                 />
               </div>
               <div className="input-group">
@@ -218,9 +229,19 @@ const PlaceOrder = () => {
                 <input
                   type="text"
                   id="lastName"
-                  placeholder=""
+                  defaultValue={
+                    isLoggedIn ? (currentUser.name?.split(" ")[1] ?? "") : ""
+                  }
+                  readOnly={isLoggedIn}
+                  style={
+                    isLoggedIn ?
+                      {
+                        background: "var(--color-background-secondary)",
+                        cursor: "not-allowed",
+                      }
+                    : {}
+                  }
                   required
-                  aria-required="true"
                 />
               </div>
             </div>
@@ -229,9 +250,17 @@ const PlaceOrder = () => {
               <input
                 type="email"
                 id="email"
-                placeholder=""
+                defaultValue={isLoggedIn ? currentUser.email : ""}
+                readOnly={isLoggedIn}
+                style={
+                  isLoggedIn ?
+                    {
+                      background: "var(--color-background-secondary)",
+                      cursor: "not-allowed",
+                    }
+                  : {}
+                }
                 required
-                aria-required="true"
               />
             </div>
             <div className="input-group">
@@ -239,18 +268,37 @@ const PlaceOrder = () => {
               <input
                 type="text"
                 id="street"
-                placeholder=""
+                defaultValue={isLoggedIn ? (currentUser.street ?? "") : ""}
+                readOnly={isLoggedIn}
+                style={
+                  isLoggedIn ?
+                    {
+                      background: "var(--color-background-secondary)",
+                      cursor: "not-allowed",
+                    }
+                  : {}
+                }
                 required
                 aria-required="true"
               />
             </div>
+
             <div className="multi-fields">
               <div className="input-group">
                 <label htmlFor="city">City</label>
                 <input
                   type="text"
                   id="city"
-                  placeholder=""
+                  defaultValue={isLoggedIn ? (currentUser.city ?? "") : ""}
+                  readOnly={isLoggedIn}
+                  style={
+                    isLoggedIn ?
+                      {
+                        background: "var(--color-background-secondary)",
+                        cursor: "not-allowed",
+                      }
+                    : {}
+                  }
                   required
                   aria-required="true"
                 />
@@ -260,7 +308,16 @@ const PlaceOrder = () => {
                 <input
                   type="text"
                   id="state"
-                  placeholder=""
+                  defaultValue={isLoggedIn ? (currentUser.state ?? "") : ""}
+                  readOnly={isLoggedIn}
+                  style={
+                    isLoggedIn ?
+                      {
+                        background: "var(--color-background-secondary)",
+                        cursor: "not-allowed",
+                      }
+                    : {}
+                  }
                   required
                   aria-required="true"
                 />

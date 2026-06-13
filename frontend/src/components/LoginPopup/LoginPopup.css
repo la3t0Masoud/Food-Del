@@ -363,3 +363,74 @@
     display: none;
   }
 }
+/* ========================================
+   Delivery Info Divider
+   ======================================== */
+.login-input-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0 2px;
+}
+
+.login-input-divider::before,
+.login-input-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.login-input-divider span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* ========================================
+   Two-column fields row (City / State)
+   ======================================== */
+.login-multi-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ========================================
+   Error Box (replaces inline <p>)
+   ======================================== */
+.login-error-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(229, 57, 53, 0.08);
+  border: 1px solid rgba(229, 57, 53, 0.25);
+  border-radius: 8px;
+  color: #e53935;
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: -8px;
+}
+
+.login-error-box svg {
+  flex-shrink: 0;
+  color: #e53935;
+}
+
+/* ========================================
+   Responsive — mobile
+   ======================================== */
+@media (max-width: 480px) {
+  .login-multi-fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .login-input-divider span {
+    font-size: 10px;
+  }
+}

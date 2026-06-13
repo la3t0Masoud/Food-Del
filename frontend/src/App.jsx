@@ -12,6 +12,7 @@ import { ThemeProvider } from "./context/ThemeContext/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import "./App.css";
 import { food_list, SINGLE_SELECT_KEYS } from "./assets/assets";
+import { AuthProvider } from "./context/AuthContext";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -62,76 +63,78 @@ const App = () => {
   };
 
   return (
-    <ThemeProvider>
-      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
-      {showDetails && (
-        <DetailsPopup
-          key={foodDetails._id}
-          PDetails={foodDetails}
-          setShowDetails={setShowDetails}
-          savedOptions={savedOptions}
-          setSavedOptions={setSavedOptions}
-          savedPrices={savedPrices}
-          setSavedPrices={setSavedPrices}
-        />
-      )}
-      <div className="app">
-        <Navbar setShowLogin={setShowLogin} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                setShowDetails={setShowDetails}
-                setFoodDetails={setFoodDetails}
-                savedPrices={savedPrices}
-              />
-            }
+    <AuthProvider>
+      <ThemeProvider>
+        {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+        {showDetails && (
+          <DetailsPopup
+            key={foodDetails._id}
+            PDetails={foodDetails}
+            setShowDetails={setShowDetails}
+            savedOptions={savedOptions}
+            setSavedOptions={setSavedOptions}
+            savedPrices={savedPrices}
+            setSavedPrices={setSavedPrices}
           />
-          <Route path="/cart" element={<Cart savedPrices={savedPrices} />} />
-          <Route path="/order" element={<PlaceOrder />} />
-          <Route
-            path="/SearchBar"
-            element={
-              <SerachBar
-                setShowDetails={setShowDetails}
-                setFoodDetails={setFoodDetails}
-                savedPrices={savedPrices}
-              />
-            }
-          />
-        </Routes>
-      </div>
-      <Footer />
-
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.button
-            className="scroll-to-top"
-            onClick={scrollToTop}
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Scroll to top">
-            <svg
-              className="scroll-to-top-icon"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2.5}
-                d="M5 10l7-7m0 0l7 7m-7-7v18"
-              />
-            </svg>
-          </motion.button>
         )}
-      </AnimatePresence>
-    </ThemeProvider>
+        <div className="app">
+          <Navbar setShowLogin={setShowLogin} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  setShowDetails={setShowDetails}
+                  setFoodDetails={setFoodDetails}
+                  savedPrices={savedPrices}
+                />
+              }
+            />
+            <Route path="/cart" element={<Cart savedPrices={savedPrices} />} />
+            <Route path="/order" element={<PlaceOrder />} />
+            <Route
+              path="/SearchBar"
+              element={
+                <SerachBar
+                  setShowDetails={setShowDetails}
+                  setFoodDetails={setFoodDetails}
+                  savedPrices={savedPrices}
+                />
+              }
+            />
+          </Routes>
+        </div>
+        <Footer />
+
+        <AnimatePresence>
+          {showScrollTop && (
+            <motion.button
+              className="scroll-to-top"
+              onClick={scrollToTop}
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 100 }}
+              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Scroll to top">
+              <svg
+                className="scroll-to-top-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M5 10l7-7m0 0l7 7m-7-7v18"
+                />
+              </svg>
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </ThemeProvider>
+    </AuthProvider>
   );
 };
 
