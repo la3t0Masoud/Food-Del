@@ -872,3 +872,58 @@
     font-size: 11px;
   }
 }
+/* ========================================
+   Fix: Grid children overflow on mobile
+   ======================================== */
+.cart-container {
+  overflow-x: hidden;
+}
+
+.cart-promocode-wrapper,
+.cart-total-wrapper {
+  min-width: 0;
+  width: 100%;
+}
+
+/* ========================================
+   Fix: Inner sections shouldn't exceed parent
+   ======================================== */
+.cart-charity,
+.cart-promocode,
+.cart-total {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* ========================================
+   Fix: Promo input on small screens
+   ======================================== */
+@media (max-width: 885px) {
+  .cart-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-charity {
+    padding: 20px;
+  }
+
+  .cart-promocode {
+    padding: 20px;
+  }
+
+  .cart-total {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-promocode-input {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cart-promocode-input button {
+    width: 100%;
+  }
+}
